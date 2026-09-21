@@ -56,4 +56,14 @@ export interface TestimonialItem {
   quote: string;
   highlight: string;
   avatarText: string;
+  category: 'all' | 'newlywed' | 'mid-marriage' | 'long-marriage' | 'foreplay';
+  categoryLabel?: string;
+  rating?: number;
+  timeAgo?: string;
+  gameMoment: string;
+  beforeState: string;
+  afterState: string;
+  helpfulCount?: number;
 }
+
+

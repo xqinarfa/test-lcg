@@ -60,12 +60,11 @@ export default function OfferSection({ onOpenModal }: OfferSectionProps) {
               </div>
             </div>
           </div>
-
           <div className="offer-action-box">
             <Button 
               onClick={onOpenModal}
               id="btnMainSekarang"
-              style={{ fontSize: '1.12rem', padding: '16px 36px' }}
+              className="btn-lg"
             >
               MAIN SEKARANG
             </Button>
