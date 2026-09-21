@@ -347,55 +347,59 @@ img {
 }
 
 /* ==========================================================================
-   NAVIGATION HEADER (PREMIUM LIQUID GLASSMORPHISM)
+   NAVIGATION HEADER (3D CONVEX GLASS CARD & ANIMATED TICKER)
    ========================================================================== */
 .site-header {
-  position: sticky;
-  top: 0;
+  position: fixed;
+  top: 14px;
+  left: 0;
+  right: 0;
   width: 100%;
-  height: var(--nav-height);
-  background: linear-gradient(
-    180deg, 
-    rgba(24, 15, 22, 0.62) 0%, 
-    rgba(14, 8, 12, 0.50) 100%
-  );
-  backdrop-filter: blur(24px) saturate(190%) contrast(105%);
-  -webkit-backdrop-filter: blur(24px) saturate(190%) contrast(105%);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 
-    0 8px 32px -4px rgba(0, 0, 0, 0.45),
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.14),
-    inset 0 -1px 0 0 rgba(230, 185, 128, 0.08);
   z-index: 100;
-  display: flex;
-  align-items: center;
-  transition: 
-    background var(--transition-normal), 
-    border-color var(--transition-normal), 
-    box-shadow var(--transition-normal), 
-    height var(--transition-normal);
+  pointer-events: none;
+  padding: 0 16px;
+  transition: top var(--transition-normal);
 }
 
 .site-header.is-scrolled {
-  height: calc(var(--nav-height) - 6px);
-  background: linear-gradient(
-    180deg, 
-    rgba(20, 11, 18, 0.82) 0%, 
-    rgba(12, 7, 11, 0.74) 100%
-  );
-  backdrop-filter: blur(28px) saturate(200%) contrast(110%);
-  -webkit-backdrop-filter: blur(28px) saturate(200%) contrast(110%);
-  border-bottom: 1px solid rgba(230, 185, 128, 0.18);
-  box-shadow: 
-    0 14px 40px -6px rgba(0, 0, 0, 0.65),
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.20),
-    inset 0 -1px 0 0 rgba(230, 185, 128, 0.12);
+  top: 10px;
 }
 
 .nav-content {
+  pointer-events: auto;
+  max-width: 1080px;
+  margin: 0 auto;
+  height: 64px;
+  background: rgba(28, 17, 24, 0.72);
+  backdrop-filter: blur(24px) saturate(190%) contrast(105%);
+  -webkit-backdrop-filter: blur(24px) saturate(190%) contrast(105%);
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    inset 0px 32px 28px rgba(0, 0, 0, 0.50),
+    inset 0px -32px 28px rgba(255, 255, 255, 0.12),
+    1px 1px 2px rgba(255, 255, 255, 0.20),
+    -1px -1px 2px rgba(0, 0, 0, 0.45),
+    0 16px 36px -6px rgba(0, 0, 0, 0.70),
+    0 0 0 1px rgba(230, 185, 128, 0.16);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 0 20px 0 24px;
+  transition: all var(--transition-normal);
+}
+
+.site-header.is-scrolled .nav-content {
+  height: 58px;
+  background: rgba(20, 11, 17, 0.86);
+  box-shadow:
+    inset 0px 28px 24px rgba(0, 0, 0, 0.60),
+    inset 0px -28px 24px rgba(255, 255, 255, 0.16),
+    1px 1px 2px rgba(255, 255, 255, 0.26),
+    -1px -1px 2px rgba(0, 0, 0, 0.55),
+    0 20px 42px -6px rgba(0, 0, 0, 0.80),
+    0 0 0 1px rgba(230, 185, 128, 0.22);
 }
 
 .brand-link {
@@ -411,29 +415,32 @@ img {
 }
 
 .brand-logo-img {
-  height: 36px;
+  height: 34px;
   width: auto;
 }
 
 .nav-actions {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .nav-link {
-  font-size: 0.92rem;
+  font-size: 0.90rem;
   color: var(--text-secondary);
   font-weight: 500;
-  padding: 7px 15px;
-  border-radius: var(--radius-full);
-  transition: color var(--transition-fast), background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+  padding: 6px 14px;
+  border-radius: 12px;
+  transition: all var(--transition-fast);
 }
 
 .nav-link:hover {
   color: var(--text-primary);
-  background: rgba(255, 255, 255, 0.08);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.07);
+  box-shadow:
+    inset 0px 4px 6px rgba(0, 0, 0, 0.30),
+    inset 0px -4px 6px rgba(255, 255, 255, 0.08),
+    1px 1px 1px rgba(255, 255, 255, 0.12);
   transform: translateY(-1px);
 }
 
@@ -441,7 +448,7 @@ img {
    HERO SECTION (FIGMA ORGANIC WAVES INTEGRATION)
    ========================================================================== */
 .hero-section {
-  padding: 72px 0 145px;
+  padding: 120px 0 145px;
   position: relative;
   overflow: hidden;
   background: radial-gradient(circle at 75% 35%, rgba(185, 55, 105, 0.22) 0%, transparent 60%),
@@ -523,55 +530,86 @@ img {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 22px;
+  gap: 18px;
+  max-width: 580px;
 }
 
 .hero-headline {
-  font-family: var(--font-serif);
-  font-size: clamp(2.4rem, 4.2vw, 3.8rem);
-  font-weight: 600;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.hero-headline em {
+.hero-eyebrow-question {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: clamp(1.02rem, 1.4vw, 1.22rem);
+  font-weight: 500;
+  color: var(--accent-rose-light);
+  line-height: 1.45;
+  letter-spacing: 0.01em;
+  opacity: 0.95;
+  text-wrap: balance;
+}
+
+.hero-main-title {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: clamp(2.2rem, 3.5vw, 3.3rem);
+  font-weight: 600;
+  line-height: 1.16;
+  letter-spacing: -0.015em;
+  color: var(--text-primary);
+  text-wrap: balance;
+}
+
+.hero-main-title em {
   font-style: italic;
   font-weight: 400;
   color: var(--accent-gold);
+  text-shadow: 0 0 20px rgba(230, 185, 128, 0.35);
 }
 
 .hero-subtext {
-  font-size: 1.12rem;
+  font-size: 1.02rem;
   color: var(--text-secondary);
-  line-height: 1.65;
-  max-width: 540px;
+  line-height: 1.6;
+  max-width: 520px;
 }
 
 .hero-actions {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 14px;
   margin-top: 4px;
 }
 
 /* Pricing Row */
 .price-block {
   display: flex;
-  align-items: baseline;
+  align-items: center;
+  flex-wrap: wrap;
   gap: 14px;
   margin-top: 2px;
 }
 
+.price-tag-group {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
 .price-original {
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   color: var(--text-muted);
   text-decoration: line-through;
+  opacity: 0.75;
 }
 
 .price-current {
   font-family: var(--font-serif);
-  font-size: 2.2rem;
+  font-size: 2.1rem;
   font-weight: 700;
   color: var(--accent-gold);
   line-height: 1;
@@ -579,12 +617,14 @@ img {
 }
 
 .price-note {
-  font-size: 0.84rem;
-  color: var(--text-secondary);
-  background: rgba(255, 255, 255, 0.05);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--accent-gold-light);
+  background: rgba(230, 185, 128, 0.1);
   padding: 4px 10px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(230, 185, 128, 0.25);
 }
 
 /* Phone Mockup Frame: Grounded, authentic perspective */
@@ -722,7 +762,7 @@ img {
   position: relative;
   width: 100%;
   max-width: 640px;
-  height: 330px;
+  height: 365px;
   margin: 32px auto 16px;
   perspective: 1200px;
 }
@@ -895,17 +935,18 @@ img {
 }
 
 .stacked-card-body h3 {
-  font-size: 1.32rem;
-  font-weight: 600;
+  font-size: 1.22rem;
+  font-weight: 700;
   color: var(--text-primary);
   line-height: 1.35;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
+  letter-spacing: 0.01em;
 }
 
 .stacked-card-body p {
   color: var(--text-secondary);
-  font-size: 1.02rem;
-  line-height: 1.65;
+  font-size: 0.95rem;
+  line-height: 1.6;
 }
 
 .stacked-card-footer {
@@ -2330,15 +2371,23 @@ img {
 .offer-corner.br { bottom: 14px; right: 14px; border-width: 0 2px 2px 0; border-bottom-right-radius: 6px; }
 
 .offer-header {
-  margin-bottom: 32px;
+  margin-bottom: 28px;
+}
+
+.offer-header .section-title {
+  font-size: clamp(1.8rem, 2.7vw, 2.35rem);
+  line-height: 1.24;
+  text-wrap: balance;
 }
 
 .offer-subtitle {
-  color: var(--text-secondary);
-  font-size: 1.02rem;
+  color: var(--accent-rose-light);
+  font-weight: 500;
+  font-size: 0.98rem;
   max-width: 580px;
-  margin: 12px auto 0;
-  line-height: 1.6;
+  margin: 10px auto 0;
+  line-height: 1.55;
+  letter-spacing: 0.02em;
 }
 
 .offer-price-showcase {
@@ -2805,7 +2854,7 @@ img {
 
   .stacked-deck-container {
     max-width: 580px;
-    height: 330px;
+    height: 365px;
   }
 
   .board-track-connector {
@@ -2837,12 +2886,31 @@ img {
     --nav-height: 64px;
   }
 
+  .site-header {
+    top: 8px;
+    padding: 0 10px;
+  }
+
+  .nav-content {
+    height: 56px;
+    padding: 0 14px;
+    border-radius: 16px;
+  }
+
+  .brand-logo-img {
+    height: 28px;
+  }
+
+  .nav-link {
+    display: none;
+  }
+
   .container {
     padding: 0 18px;
   }
 
   .hero-section {
-    padding: 36px 0 95px;
+    padding: 95px 0 95px;
   }
 
   .insight-section {
@@ -2981,6 +3049,289 @@ img {
 .reveal-delay-2 { transition-delay: 0.16s; }
 .reveal-delay-3 { transition-delay: 0.24s; }
 .reveal-delay-4 { transition-delay: 0.32s; }
+
+/* ==========================================================================
+   OFFER SECTION REFINEMENTS (Bayar Sekali Aja, Xendit Flow)
+   ========================================================================== */
+.offer-suffix-aja {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #ff4d6d;
+  margin-left: 8px;
+  text-shadow: 0 0 12px rgba(255, 77, 109, 0.5);
+  letter-spacing: 0.05em;
+}
+
+.offer-checkout-flow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+
+.flow-step {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 6px 12px;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  color: #e5e5e5;
+  font-weight: 500;
+}
+
+.flow-num {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #ff4d6d;
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flow-arrow {
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+/* ==========================================================================
+   TESTIMONIAL SECTION (Apa Kata Mereka Yang Sudah Coba?)
+   ========================================================================== */
+.testimonial-section {
+  padding: 100px 0 120px;
+  position: relative;
+  background: radial-gradient(circle at 50% 10%, rgba(255, 77, 109, 0.08) 0%, transparent 65%);
+}
+
+.testimonial-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-top: 50px;
+}
+
+.testimonial-card {
+  background: linear-gradient(145deg, rgba(28, 16, 24, 0.85) 0%, rgba(17, 10, 15, 0.9) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 28px;
+  backdrop-filter: blur(14px);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.testimonial-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255, 77, 109, 0.6), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(255, 77, 109, 0.3);
+  box-shadow: 0 18px 45px rgba(255, 77, 109, 0.14), 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.testimonial-card:hover::before {
+  opacity: 1;
+}
+
+.testimonial-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.testimonial-stars {
+  display: flex;
+  gap: 3px;
+  color: #ffb703;
+  font-size: 1.15rem;
+}
+
+.star-icon {
+  text-shadow: 0 0 8px rgba(255, 183, 3, 0.6);
+}
+
+.testimonial-verified {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(46, 213, 115, 0.12);
+  border: 1px solid rgba(46, 213, 115, 0.3);
+  color: #2ed573;
+  font-size: 0.76rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 9999px;
+}
+
+.testimonial-highlight {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: #ff85a1;
+  background: rgba(255, 77, 109, 0.1);
+  border-left: 3px solid #ff4d6d;
+  padding: 6px 12px;
+  border-radius: 0 8px 8px 0;
+  line-height: 1.4;
+}
+
+.testimonial-quote {
+  font-size: 0.96rem;
+  line-height: 1.65;
+  color: #e5d8df;
+  margin: 0;
+  font-style: italic;
+  flex: 1;
+}
+
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.testimonial-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff4d6d 0%, #7928ca 100%);
+  color: #fff;
+  font-size: 0.88rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(255, 77, 109, 0.35);
+  flex-shrink: 0;
+}
+
+.testimonial-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.author-name {
+  font-size: 0.96rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.author-meta {
+  font-size: 0.8rem;
+  color: #a3959e;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.meta-sep {
+  opacity: 0.4;
+}
+
+.testimonial-cta-banner {
+  margin-top: 48px;
+  background: linear-gradient(135deg, rgba(255, 77, 109, 0.12) 0%, rgba(20, 10, 16, 0.9) 100%);
+  border: 1px solid rgba(255, 77, 109, 0.3);
+  border-radius: 20px;
+  padding: 28px 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+}
+
+.testimonial-cta-text h4 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #fff;
+  margin: 0 0 6px 0;
+}
+
+.testimonial-cta-text p {
+  font-size: 0.92rem;
+  color: #d1c5cc;
+  margin: 0;
+}
+
+/* ==========================================================================
+   MODAL STEP PROGRESS PILLS (Xendit Flow)
+   ========================================================================== */
+.modal-flow-steps {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 12px 0 18px;
+  flex-wrap: wrap;
+}
+
+.step-badge {
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 4px 10px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.step-badge.active {
+  color: #fff;
+  background: rgba(255, 77, 109, 0.22);
+  border-color: rgba(255, 77, 109, 0.5);
+  box-shadow: 0 0 10px rgba(255, 77, 109, 0.3);
+}
+
+.step-arrow {
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 0.8rem;
+}
+
+@media (max-width: 768px) {
+  .testimonial-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .testimonial-cta-banner {
+    flex-direction: column;
+    text-align: center;
+    padding: 24px 20px;
+  }
+
+  .offer-checkout-flow {
+    font-size: 0.75rem;
+    gap: 6px;
+  }
+}
 
 /* ==========================================================================
    ACCESSIBILITY & PREFERS-REDUCED-MOTION (Emil Kowalski / A11y Standards)

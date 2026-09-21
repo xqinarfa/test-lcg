@@ -9,6 +9,7 @@ import GameplaySection from './components/GameplaySection';
 import FeaturesSection from './components/FeaturesSection';
 import CardDeckSection from './components/CardDeckSection';
 import FaqSection from './components/FaqSection';
+import TestimonialSection from './components/TestimonialSection';
 import OfferSection from './components/OfferSection';
 import Footer from './components/Footer';
 import MobileStickyBar from './components/MobileStickyBar';
@@ -360,6 +361,10 @@ export default function Home() {
             onSelectTab={handleSelectTab}
             onShuffleCard={handleShuffleCard}
           />
+        </div>
+
+        <div className="reveal-on-scroll">
+          <TestimonialSection onOpenModal={handleOpenModal} />
         </div>
 
         <div className="reveal-on-scroll">

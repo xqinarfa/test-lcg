@@ -99,22 +99,29 @@ export default function HeroSection({ onOpenModal, onScrollToSection }: HeroSect
         >
           <div className="status-pill">
             <span className="status-dot"></span>
-            Khusus Pasangan Suami Istri
+            Game Ini Khusus PASUTRI! Bikin Nagih!
           </div>
 
           <h1 className="hero-headline">
-            Hangatkan kembali ritme keintiman di balik pintu kamar <em>bersama pasangan.</em>
+            <span className="hero-eyebrow-question">
+              Pernikahan Kamu Hambar? Bosen Rutinitas di Ranjang Gitu-Gitu Aja?
+            </span>
+            <span className="hero-main-title">
+              Mau Gak Hubungan Intim yang <em>Bikin Nagih?</em>
+            </span>
           </h1>
 
           <p className="hero-subtext">
-            Sebuah game papan digital interaktif untuk pasutri. Hadirkan suasana santai, obrolan mendalam, sentuhan foreplay, hingga tantangan ranjang yang mengalir alami tanpa rasa canggung.
+            Main <strong>LOVE COUPLE GAMES!</strong> Game papan digital nomor satu khusus pasutri untuk menghidupkan kembali gairah, tawa, dan keintiman panas berdua tanpa rasa canggung.
           </p>
 
-          {/* Transparent Pricing */}
+          {/* Transparent Pricing with Boss Copy */}
           <div className="price-block">
-            <span className="price-original">Rp 250.000</span>
-            <span className="price-current">Rp 88.000</span>
-            <span className="price-note">Sekali bayar, akses selamanya</span>
+            <div className="price-tag-group">
+              <span className="price-original">Rp 250.000</span>
+              <span className="price-current">Rp 88.000</span>
+            </div>
+            <span className="price-note">MURAH BANGET! BAYAR SEKALI AJA</span>
           </div>
 
           {/* Action Buttons */}
@@ -126,7 +133,7 @@ export default function HeroSection({ onOpenModal, onScrollToSection }: HeroSect
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style={{ marginRight: '6px' }}>
                 <path d="M12 2a1 1 0 0 1 1 1v10.586l3.293-3.293a1 1 0 1 1 1.414 1.414l-5 5a1 1 0 0 1-1.414 0l-5-5a1 1 0 1 1 1.414-1.414L11 13.586V3a1 1 0 0 1 1-1zm-7 16a1 1 0 0 1 1-1h12a1 1 0 1 1 0 2H6a1 1 0 0 1-1-1z"/>
               </svg>
-              Buka Akses Game Sekarang
+              Download APK (Android dan iOS)
             </Button>
 
             <button

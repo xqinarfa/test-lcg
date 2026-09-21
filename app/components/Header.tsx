@@ -22,7 +22,7 @@ export default function Header({ onOpenModal, onScrollToSection }: HeaderProps) 
 
   return (
     <header className={`site-header ${isScrolled ? 'is-scrolled' : ''}`}>
-      <div className="container nav-content">
+      <div className="nav-content">
         <a href="#" className="brand-link" aria-label="Love Couple Games Beranda">
           <img 
             src="/assets/images/logo.svg" 

@@ -1,4 +1,4 @@
-import { BoardTile, ChallengeDeck, FaqItem, PainPoint, GameplayStep, FeaturePillar } from '../types';
+import { BoardTile, ChallengeDeck, FaqItem, PainPoint, GameplayStep, FeaturePillar, TestimonialItem } from '../types';
 
 export const boardTiles: BoardTile[] = [
   {
@@ -183,16 +183,16 @@ export const faqItems: FaqItem[] = [
 
 export const painPoints: PainPoint[] = [
   {
-    title: 'Rutinitas dan Kelelahan Harian',
-    description: 'Setelah seharian bekerja dan mengurus rumah tangga, sisa energi di malam hari sering kali hanya habis untuk menatap layar ponsel masing-masing tanpa koneksi nyata.',
+    title: 'SUAMI MAIN HAJAR AJA, PADAHAL KAMU BELUM SIAP',
+    description: 'Langsung tancap gas tanpa pemanasan dan foreplay yang cukup. Padahal istri butuh waktu, sentuhan lembut di leher dan pinggang, serta obrolan santai biar benar-benar basah, siap, dan bergairah.',
   },
   {
-    title: 'Keinginan yang Tertahan Rasa Canggung',
-    description: 'Banyak hal intim yang ingin diutarakan atau dicoba, namun sulit diungkapkan karena ragu bagaimana memulainya tanpa membuat pasangan merasa dihakimi.',
+    title: 'ISTRI KAYAK GEDEBOG PISANG, GA ADA DESAHAN, BIKIN MALES',
+    description: 'Pasif total, kaku, dan tanpa ekspresi. Bikin suami merasa main sendirian dan akhirnya kehilangan gairah. Game ini mencairkan suasana ranjang jadi penuh tawa, desahan, dan interaksi dua arah.',
   },
   {
-    title: 'Variasi Hubungan yang Monoton',
-    description: 'Aktivitas ranjang berubah menjadi agenda yang mudah ditebak. Papan permainan ini hadir sebagai pihak ketiga yang netral untuk membawa keseruan baru secara natural.',
+    title: 'BOSEN RUTINITAS RANJANG GITU-GITU AJA & KURANG NAGIH',
+    description: 'Lampu dimatikan, posisi yang itu-itu lagi, buru-buru selesai tanpa ada petualangan baru. Lewat 120+ kartu tantangan Love Couple Games, setiap malam jadi momen penasaran yang bikin nagih terus!',
   },
 ];
 
@@ -230,5 +230,44 @@ export const featurePillars: FeaturePillar[] = [
   {
     title: '100% Offline & Privat',
     description: 'Dapat dimainkan di mana saja tanpa memerlukan koneksi internet, menjamin seluruh momen intim kalian tetap tersimpan aman di kamar pribadi.',
+  },
+];
+
+export const testimonials: TestimonialItem[] = [
+  {
+    id: 1,
+    couple: 'Rina & Dimas',
+    duration: 'Menikah 4 Tahun',
+    city: 'Jakarta Selatan',
+    quote: 'Awalnya mikir game ginian lebay. Tapi pas dicoba malam minggu kemarin, gila sih... Suami yang biasanya tancap gas buru-buru, jadi sabar banget ikutin petak foreplay. Beneran bikin nagih dan ga ada canggung sama sekali!',
+    highlight: 'Gak ada lagi istilah suami main hajar aja!',
+    avatarText: 'RD',
+  },
+  {
+    id: 2,
+    couple: 'Bagas & Nadia',
+    duration: 'Menikah 2 Tahun',
+    city: 'Surabaya',
+    quote: 'Istri saya jujur pemalu banget di kasur, sering cuma diam kayak patung. Pas main giliran kartu Sentuhan Lembut & Tantangan Rahasia, suasananya berubah 180 derajat. Desahannya keluar natural, hubungan kita jadi membara lagi!',
+    highlight: 'Istri yang tadinya pasif jadi super ekspresif!',
+    avatarText: 'BN',
+  },
+  {
+    id: 3,
+    couple: 'Ferry & Anita',
+    duration: 'Menikah 7 Tahun',
+    city: 'Bandung',
+    quote: 'Udah nikah 7 tahun, ranjang mulai hambar dan monoton. Game ini murah banget cuma 88rb sekali bayar, tapi efeknya jauh lebih ampuh daripada staycation jutaan rupiah. Tiap malam rasanya pengen lempar dadu terus berdua.',
+    highlight: 'Pernikahan hambar jadi membara setiap malam!',
+    avatarText: 'FA',
+  },
+  {
+    id: 4,
+    couple: 'Maya & Reza',
+    duration: 'Menikah 3 Tahun',
+    city: 'Tangerang',
+    quote: 'Timer otomatis dan variasinya seru parah. Kami berdua ketawa-tawa dulu di babak awal, lalu makin panas di babak akhir. Buat pasutri yang ngerasa ranjangnya gitu-gitu aja, WAJIB punya APK ini!',
+    highlight: 'Bikin ketagihan eksplorasi gaya baru!',
+    avatarText: 'MR',
   },
 ];

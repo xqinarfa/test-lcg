@@ -47,3 +47,13 @@ export interface FeaturePillar {
 export type ModalStep = 'selection' | 'qris' | 'success';
 
 export type PaymentMethod = 'qris' | 'gopay' | 'bca' | 'mandiri';
+
+export interface TestimonialItem {
+  id: number;
+  couple: string;
+  duration: string;
+  city: string;
+  quote: string;
+  highlight: string;
+  avatarText: string;
+}

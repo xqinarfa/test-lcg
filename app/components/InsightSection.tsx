@@ -60,9 +60,9 @@ export default function InsightSection() {
 
   const cardThemes = ['card-theme-rose', 'card-theme-gold', 'card-theme-purple'];
   const cardTags = [
-    '✦ Realita #01 • Beban & Kelelahan',
-    '♥ Realita #02 • Komunikasi & Canggung',
-    '★ Realita #03 • Kejenuhan & Monoton'
+    '✦ Masalah #01 • Belum Siap',
+    '♥ Masalah #02 • Kurang Respon',
+    '★ Masalah #03 • Rutinitas Monoton'
   ];
 
   const getCardStyle = (index: number): React.CSSProperties => {
@@ -219,12 +219,12 @@ export default function InsightSection() {
       <div className="insight-sticky-wrapper">
         <div className="container insight-sticky-inner">
           <div className="insight-header text-center">
-            <span className="insight-eyebrow">REFLEKSI HUBUNGAN PASUTRI</span>
+            <span className="insight-eyebrow">JUJUR-JUJURAN KHUSUS PASUTRI</span>
             <h2 className="section-title">
-              Tiga hal yang sering meredupkan keintiman pasutri
+              KAMU NGERASAIN INI GA SIH?
             </h2>
             <p className="section-subtitle mx-auto">
-              Bukan karena rasa cinta berkurang, tetapi karena rutinitas yang membuat momen berdua kehilangan rasa penasaran.
+              Bukan karena rasa cinta berkurang, tapi rutinitas ranjang yang gitu-gitu aja bikin gairah perlahan redup...
             </p>
           </div>
 

@@ -59,26 +59,42 @@ export default function CheckoutModal({
         {step === 'selection' && (
           <div>
             <div className="modal-header">
-              <h2 id="modalTitle">Akses Penuh Love Couple Games</h2>
-              <p>Lisensi permanen untuk digunakan berdua bersama pasangan</p>
+              <span className="faq-kicker" style={{ fontSize: '0.72rem', letterSpacing: '0.12em', color: '#ff4d6d' }}>
+                PROSES CEPAT & PRIVAT 100%
+              </span>
+              <h2 id="modalTitle">DOWNLOAD LOVE COUPLE GAMES</h2>
+              <p>MURAH BANGET, BAYAR SEKALI AJA Rp 88.000!</p>
+            </div>
+
+            {/* Step progress pills */}
+            <div className="modal-flow-steps">
+              <span className="step-badge active">1. Xendit</span>
+              <span className="step-arrow">›</span>
+              <span className="step-badge">2. Bayar</span>
+              <span className="step-arrow">›</span>
+              <span className="step-badge">3. Bikin Akun</span>
+              <span className="step-arrow">›</span>
+              <span className="step-badge">4. Download APK</span>
             </div>
 
             <div className="order-summary">
               <div className="summary-row">
-                <span>Paket Lengkap Pasutri (Android & iOS)</span>
-                <span>Rp 250.000</span>
+                <span>Harga Normal</span>
+                <span style={{ textDecoration: 'line-through', color: 'rgba(255,255,255,0.4)' }}>Rp 250.000</span>
               </div>
               <div className="summary-row discount">
-                <span>Potongan Penawaran Hari Ini</span>
+                <span>Diskon Khusus Pasutri</span>
                 <span>- Rp 162.000</span>
               </div>
               <div className="summary-row total">
-                <span>Total Pembayaran</span>
-                <span>Rp 88.000</span>
+                <span>Total Bayar Sekali Aja</span>
+                <span style={{ color: '#ff4d6d', fontSize: '1.25rem', fontWeight: 800 }}>Rp 88.000 AJA!</span>
               </div>
             </div>
 
-            <p className="payment-label">Metode Pembayaran</p>
+            <p className="payment-label">
+              Metode Pembayaran (Diproses Aman via Xendit):
+            </p>
 
             <div className="payment-methods">
               <label 
@@ -92,7 +108,7 @@ export default function CheckoutModal({
                   checked={paymentMethod === 'qris'} 
                   onChange={() => onSelectPaymentMethod('qris')} 
                 />
-                <span>QRIS (Semua Bank & E-Wallet)</span>
+                <span>QRIS Instant (BCA, GoPay, OVO, ShopeePay, DANA)</span>
               </label>
 
               <label 
@@ -106,7 +122,7 @@ export default function CheckoutModal({
                   checked={paymentMethod === 'gopay'} 
                   onChange={() => onSelectPaymentMethod('gopay')} 
                 />
-                <span>GoPay Instan</span>
+                <span>GoPay / E-Wallet Xendit</span>
               </label>
 
               <label 
@@ -120,7 +136,7 @@ export default function CheckoutModal({
                   checked={paymentMethod === 'bca'} 
                   onChange={() => onSelectPaymentMethod('bca')} 
                 />
-                <span>BCA Virtual Account</span>
+                <span>BCA Virtual Account (Xendit)</span>
               </label>
 
               <label 
@@ -134,15 +150,16 @@ export default function CheckoutModal({
                   checked={paymentMethod === 'mandiri'} 
                   onChange={() => onSelectPaymentMethod('mandiri')} 
                 />
-                <span>Mandiri Virtual Account</span>
+                <span>Mandiri / BRI Virtual Account</span>
               </label>
             </div>
 
             <Button 
               onClick={onContinue}
-              style={{ width: '100%' }}
+              id="btnModalProceedPayment"
+              style={{ width: '100%', fontSize: '1.02rem', padding: '14px' }}
             >
-              Lanjutkan Pembayaran (Rp 88.000)
+              LANJUT KE PEMBAYARAN (XENDIT)
             </Button>
           </div>
         )}
@@ -151,13 +168,22 @@ export default function CheckoutModal({
         {step === 'qris' && (
           <div className="qris-view">
             <div className="modal-header">
-              <h2>Pindai Kode QRIS</h2>
-              <p>Buka aplikasi BCA, GoPay, OVO, ShopeePay, atau DANA untuk membayar</p>
+              <div className="modal-flow-steps">
+                <span className="step-badge">1. Xendit</span>
+                <span className="step-arrow">›</span>
+                <span className="step-badge active">2. Bayar QRIS</span>
+                <span className="step-arrow">›</span>
+                <span className="step-badge">3. Bikin Akun</span>
+                <span className="step-arrow">›</span>
+                <span className="step-badge">4. Download APK</span>
+              </div>
+              <h2>Pindai QRIS Xendit</h2>
+              <p>Buka aplikasi BCA Mobile, GoPay, OVO, ShopeePay, atau DANA untuk membayar Rp 88.000</p>
             </div>
 
             <div className="qris-frame">
               <div className="qris-laser-scanner" aria-hidden="true" />
-              <svg width="170" height="170" viewBox="0 0 24 24" fill="#130c10" aria-label="QR Code Pembayaran">
+              <svg width="170" height="170" viewBox="0 0 24 24" fill="#130c10" aria-label="QR Code Pembayaran Xendit">
                 <path d="M2 2h8v8H2V2zm2 2v4h4V4H4zm10-2h8v8h-8V2zm2 2v4h4V4h-4zM2 14h8v8H2v-8zm2 2v4h4v-4H4zm10 0h2v2h-2v-2zm4 0h2v2h-2v-2zm-2 2h2v2h-2v-2zm-2 2h2v2h-2v-2zm4 0h2v2h-2v-2zm0-4h2v2h-2v-2zm-4-2h4v2h-4v-2zm-2-2h2v2h-2v-2zm6 0h2v2h-2v-2zM5 5h2v2H5V5zm12 0h2v2h-2V5zM5 17h2v2H5v-2z"/>
               </svg>
             </div>
@@ -167,14 +193,15 @@ export default function CheckoutModal({
             </div>
 
             <p style={{ fontSize: '0.86rem', color: 'var(--text-muted)', margin: '12px 0 20px' }}>
-              Verifikasi pembayaran berjalan otomatis setelah transfer diterima.
+              Xendit akan memverifikasi pembayaran secara instan & otomatis.
             </p>
 
             <Button 
               onClick={onSimulateSuccess}
+              id="btnModalSimulateSuccess"
               style={{ width: '100%' }}
             >
-              Konfirmasi Pembayaran Selesai
+              Saya Sudah Bayar → Bikin Akun & Unduh APK
             </Button>
           </div>
         )}
@@ -183,8 +210,17 @@ export default function CheckoutModal({
         {step === 'success' && (
           <div className="success-view">
             <div className="modal-header">
-              <h2>Akses Game Anda Telah Aktif</h2>
-              <p>Simpan kode lisensi unik Anda untuk membuka fitur di aplikasi</p>
+              <div className="modal-flow-steps">
+                <span className="step-badge">1. Xendit ✓</span>
+                <span className="step-arrow">›</span>
+                <span className="step-badge">2. Bayar ✓</span>
+                <span className="step-arrow">›</span>
+                <span className="step-badge active">3. Akun Aktif ✓</span>
+                <span className="step-arrow">›</span>
+                <span className="step-badge active">4. Download APK</span>
+              </div>
+              <h2 style={{ color: 'var(--status-success)', marginTop: '8px' }}>Pembayaran Berhasil!</h2>
+              <p>Akun pasutri Anda telah dibuat otomatis. Simpan Lisensi & Unduh APK sekarang.</p>
             </div>
 
             {copiedLicense && (
@@ -227,19 +263,20 @@ export default function CheckoutModal({
 
             {downloadStarted ? (
               <div className="toast-feedback" style={{ marginBottom: '20px' }}>
-                Paket instalasi berhasil diunduh ke perangkat Anda.
+                Paket APK instalasi berhasil diunduh ke HP Anda!
               </div>
             ) : null}
 
             <Button 
               onClick={onDownloadApk}
-              style={{ width: '100%', marginBottom: '14px' }}
+              id="btnModalDownloadApk"
+              style={{ width: '100%', marginBottom: '14px', fontSize: '1.05rem' }}
             >
-              Unduh Paket Game (APK)
+              DOWNLOAD APK SEKARANG (Android & iOS)
             </Button>
 
             <p style={{ fontSize: '0.84rem', color: 'var(--text-muted)' }}>
-              Untuk pengguna iPhone atau iPad, gunakan link aktivasi portal web yang telah disinkronkan.
+              Untuk iPhone / iPad, gunakan tautan akses instan web app yang tersinkron otomatis.
             </p>
           </div>
         )}
