@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from './Button';
 
 export interface HeaderProps {
@@ -9,8 +9,19 @@ export interface HeaderProps {
 }
 
 export default function Header({ onOpenModal, onScrollToSection }: HeaderProps) {
+  const [isScrolled, setIsScrolled] = useState<boolean>(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <header className="site-header">
+    <header className={`site-header ${isScrolled ? 'is-scrolled' : ''}`}>
       <div className="container nav-content">
         <a href="#" className="brand-link" aria-label="Love Couple Games Beranda">
           <img 
