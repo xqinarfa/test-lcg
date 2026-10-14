@@ -635,6 +635,156 @@ img {
   border: 1px solid rgba(230, 185, 128, 0.25);
 }
 
+/* Hero Platform Availability & Ban Presentation (Impeccable & Anti-UI-Slop) */
+.hero-platform-strip {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+  width: 100%;
+  max-width: 540px;
+}
+
+.platform-tag-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.82rem;
+  backdrop-filter: blur(12px);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  user-select: none;
+}
+
+.platform-chip-apple {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text-primary);
+}
+
+.platform-chip-apple:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+.platform-chip-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #34d399;
+  box-shadow: 0 0 8px rgba(52, 211, 153, 0.8);
+  flex-shrink: 0;
+}
+
+.platform-chip-android {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.12), rgba(225, 29, 72, 0.06));
+  border: 1px solid rgba(244, 63, 94, 0.35);
+  color: #fcf9f7;
+  box-shadow: 0 4px 16px -4px rgba(225, 29, 72, 0.2);
+}
+
+.platform-chip-android:hover {
+  border-color: rgba(244, 63, 94, 0.55);
+  transform: translateY(-1px);
+}
+
+.flame-tag-icon {
+  color: #ff4d6d;
+  display: inline-flex;
+  animation: flameGlow 2.4s ease-in-out infinite;
+}
+
+@keyframes flameGlow {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 2px rgba(255, 77, 109, 0.4)); }
+  50% { transform: scale(1.15); filter: drop-shadow(0 0 6px rgba(255, 77, 109, 0.8)); }
+}
+
+.platform-chip-pill {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: #ff758f;
+  background: rgba(255, 77, 109, 0.18);
+  padding: 2px 7px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 77, 109, 0.32);
+}
+
+.hero-platform-subcaption {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-top: 10px;
+  max-width: 530px;
+  font-style: italic;
+}
+
+/* Phone Mockup Provocative Stamp Badge */
+.phone-banned-stamp {
+  position: absolute;
+  top: -14px;
+  right: -14px;
+  z-index: 12;
+  transform: rotate(7deg);
+  animation: floatStamp 4.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes floatStamp {
+  0%, 100% {
+    transform: rotate(7deg) translate3d(0, 0, 0);
+  }
+  50% {
+    transform: rotate(8.5deg) translate3d(0, -6px, 0);
+  }
+}
+
+.stamp-border {
+  background: rgba(24, 7, 14, 0.94);
+  border: 1.5px dashed #ff4d6d;
+  border-radius: 12px;
+  padding: 8px 14px;
+  box-shadow: 
+    0 14px 30px -4px rgba(225, 29, 72, 0.55),
+    0 0 0 1px rgba(255, 77, 109, 0.2);
+  backdrop-filter: blur(12px);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.stamp-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #ff4d6d;
+}
+
+.stamp-main-text {
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(255, 77, 109, 0.7);
+  white-space: nowrap;
+}
+
+.stamp-sub-text {
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: var(--accent-gold);
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
 /* Phone Mockup Frame: Grounded, authentic perspective */
 .phone-mockup-wrapper {
   display: flex;
@@ -665,13 +815,13 @@ img {
 
 .phone-notch {
   position: absolute;
-  top: 16px;
+  top: 4px;
   left: 50%;
   transform: translateX(-50%);
-  width: 82px;
-  height: 18px;
-  background: #000;
-  border-radius: 18px;
+  width: 50px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.22);
+  border-radius: 4px;
   z-index: 10;
 }
 
@@ -3623,6 +3773,106 @@ img {
   font-size: 0.8rem;
 }
 
+/* Modal Dual Platform Box (Apple Store & Android Banned APK) */
+.modal-platform-box {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 16px 0 18px;
+  text-align: left;
+}
+
+.modal-platform-item {
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.modal-platform-item.modal-platform-ios {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.modal-platform-item.modal-platform-android {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.08), rgba(225, 29, 72, 0.04));
+  border: 1px solid rgba(239, 68, 68, 0.25);
+}
+
+.modal-platform-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.modal-platform-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.modal-platform-badge-store {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #34d399;
+  background: rgba(52, 211, 153, 0.12);
+  border: 1px solid rgba(52, 211, 153, 0.3);
+  padding: 2px 8px;
+  border-radius: 9999px;
+}
+
+.modal-platform-badge-banned {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #fff;
+  background: linear-gradient(135deg, #ef4444, #e11d48);
+  padding: 2px 8px;
+  border-radius: 9999px;
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.35);
+}
+
+.modal-platform-desc {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+  margin: 0;
+}
+
+.modal-platform-desc em {
+  font-style: normal;
+  color: #ff6b81;
+  font-weight: 600;
+}
+
+.modal-platform-btn-ios {
+  align-self: flex-start;
+  margin-top: 4px;
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #fcf9f7;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.modal-platform-btn-ios:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.35);
+  transform: translateY(-1px);
+}
+
 @media (max-width: 768px) {
   .testimonial-grid {
     grid-template-columns: 1fr;
@@ -3638,6 +3888,20 @@ img {
   .offer-checkout-flow {
     font-size: 0.75rem;
     gap: 6px;
+  }
+
+  .hero-platform-strip {
+    justify-content: center;
+  }
+
+  .hero-platform-subcaption {
+    text-align: center;
+  }
+
+  .phone-banned-stamp {
+    top: -8px;
+    right: -6px;
+    transform: scale(0.88) rotate(5deg);
   }
 }
 
@@ -3661,7 +3925,9 @@ img {
   .dice-cube.rolling,
   .tile-pawn-indicator.pawn-hopping,
   .challenge-card.dealing,
-  .board-mission-card.changing {
+  .board-mission-card.changing,
+  .phone-banned-stamp,
+  .flame-tag-icon {
     animation: none !important;
     transform: none !important;
   }

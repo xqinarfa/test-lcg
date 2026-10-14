@@ -74,7 +74,7 @@ export default function CheckoutModal({
               <span className="step-arrow">›</span>
               <span className="step-badge">3. Bikin Akun</span>
               <span className="step-arrow">›</span>
-              <span className="step-badge">4. Download APK</span>
+              <span className="step-badge">4. Akses Game</span>
             </div>
 
             <div className="order-summary">
@@ -175,7 +175,7 @@ export default function CheckoutModal({
                 <span className="step-arrow">›</span>
                 <span className="step-badge">3. Bikin Akun</span>
                 <span className="step-arrow">›</span>
-                <span className="step-badge">4. Download APK</span>
+                <span className="step-badge">4. Akses Game</span>
               </div>
               <h2>Pindai QRIS Xendit</h2>
               <p>Buka aplikasi BCA Mobile, GoPay, OVO, ShopeePay, atau DANA untuk membayar Rp 88.000</p>
@@ -201,7 +201,7 @@ export default function CheckoutModal({
               id="btnModalSimulateSuccess"
               style={{ width: '100%' }}
             >
-              Saya Sudah Bayar → Bikin Akun & Unduh APK
+              Saya Sudah Bayar → Bikin Akun & Akses Game
             </Button>
           </div>
         )}
@@ -217,10 +217,10 @@ export default function CheckoutModal({
                 <span className="step-arrow">›</span>
                 <span className="step-badge active">3. Akun Aktif ✓</span>
                 <span className="step-arrow">›</span>
-                <span className="step-badge active">4. Download APK</span>
+                <span className="step-badge active">4. Akses Game</span>
               </div>
               <h2 style={{ color: 'var(--status-success)', marginTop: '8px' }}>Pembayaran Berhasil!</h2>
-              <p>Akun pasutri Anda telah dibuat otomatis. Simpan Lisensi & Unduh APK sekarang.</p>
+              <p>Akun pasutri Anda telah dibuat otomatis. Simpan Lisensi & Unduh / Akses Game sekarang.</p>
             </div>
 
             {copiedLicense && (
@@ -267,17 +267,66 @@ export default function CheckoutModal({
               </div>
             ) : null}
 
-            <Button 
-              onClick={onDownloadApk}
-              id="btnModalDownloadApk"
-              style={{ width: '100%', marginBottom: '14px', fontSize: '1.05rem' }}
-            >
-              DOWNLOAD APK SEKARANG (Android & iOS)
-            </Button>
+            <div className="modal-platform-box">
+              {/* Apple iOS Store */}
+              <div className="modal-platform-item modal-platform-ios">
+                <div className="modal-platform-head">
+                  <div className="modal-platform-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.61-.75 1.04-1.8 1.01-2.87-.96.04-2.17.65-2.84 1.43-.58.67-1.1 1.74-.96 2.78 1.07.08 2.18-.59 2.79-1.34z"/>
+                    </svg>
+                    <span>Apple iOS (iPhone / iPad)</span>
+                  </div>
+                  <span className="modal-platform-badge-store">✓ Tersedia di Apple Store</span>
+                </div>
+                <p className="modal-platform-desc">
+                  Game ini resmi tersedia di Apple Store &amp; Web App privat tanpa sensor.
+                </p>
+                <button
+                  type="button"
+                  onClick={onDownloadApk}
+                  className="modal-platform-btn-ios"
+                >
+                  Buka di Apple Store (iOS)
+                </button>
+              </div>
 
-            <p style={{ fontSize: '0.84rem', color: 'var(--text-muted)' }}>
-              Untuk iPhone / iPad, gunakan tautan akses instan web app yang tersinkron otomatis.
-            </p>
+              {/* Android Banned Notice & Direct APK */}
+              <div className="modal-platform-item modal-platform-android">
+                <div className="modal-platform-head">
+                  <div className="modal-platform-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d="M17.523 15.3414c-.5511 0-.9993-.4486-.9993-1.0003s.4482-1.0003.9993-1.0003c.5516 0 .9993.4486.9993 1.0003 0 .5517-.4477 1.0003-.9993 1.0003m-11.046 0c-.5511 0-.9993-.4486-.9993-1.0003s.4482-1.0003.9993-1.0003c.5516 0 .9993.4486.9993 1.0003 0 .5517-.4477 1.0003-.9993 1.0003m11.4045-6.02l1.9973-3.4592a.416.416 0 00-.1521-.5676.416.416 0 00-.5676.1521l-2.0223 3.503C15.5898 8.411 13.8504 8.125 12 8.125c-1.8504 0-3.5898.286-5.1368.8247L4.8409 5.4467a.4161.4161 0 00-.5677-.1521.4157.4157 0 00-.1521.5676l1.9973 3.4592C2.6889 11.1867.3432 14.6589 0 18.761h24c-.3432-4.1021-2.6889-7.5743-6.1185-9.4396"/>
+                    </svg>
+                    <span>Android (Semua Tipe HP)</span>
+                  </div>
+                  <span className="modal-platform-badge-banned">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style={{ display: 'inline-block', marginRight: '4px', verticalAlign: '-1px' }}>
+                      <path d="M12 23a7.5 7.5 0 0 1-5.138-12.963C8.204 8.774 11.5 6.5 11 1.5c6 4 9 8 3 14 1 0 2.5 0 3-1.5.5 2-1 9-5 9z"/>
+                    </svg>
+                    BANNED DI PLAYSTORE
+                  </span>
+                </div>
+                <p className="modal-platform-desc">
+                  Saking <em>hot &amp; berani</em>-nya tantangan intim di game ini, Google Playstore melarangnya. Unduh installer APK resmi langsung (100% aman, privat, &amp; tanpa sensor):
+                </p>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '4px 0 10px' }}>
+                  <span style={{ fontSize: '0.72rem', color: 'var(--accent-gold-light)', background: 'rgba(230, 185, 128, 0.12)', padding: '2px 8px', borderRadius: '4px', border: '1px solid rgba(230, 185, 128, 0.25)' }}>
+                    v1.4.2 Uncensored
+                  </span>
+                  <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>
+                    • 14.8 MB Siap Pasang
+                  </span>
+                </div>
+                <Button 
+                  onClick={onDownloadApk}
+                  id="btnModalDownloadApk"
+                  style={{ width: '100%', fontSize: '0.98rem' }}
+                >
+                  DOWNLOAD APK ANDROID (Tanpa Sensor)
+                </Button>
+              </div>
+            </div>
           </div>
         )}
       </div>

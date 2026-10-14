@@ -204,7 +204,14 @@ export default function Home() {
     // Simulate real download trigger
     const element = document.createElement('a');
     const file = new Blob([
-      'Love Couple Games v1.4.2 - Installer Paket Pasutri\nLicense Key: LCG-PASUTRI-88K-VIP\n\nTerima kasih telah bergabung. Pasang APK ini di perangkat Android Anda atau buka portal web melalui link aktivasi email.'
+      'Love Couple Games v1.4.2 - Paket Pasutri Resmi\n' +
+      'License Key: LCG-PASUTRI-88K-VIP\n\n' +
+      '1. PENGGUNA APPLE iOS (iPhone / iPad):\n' +
+      '   Aplikasi ini resmi tersedia di Apple Store. Buka tautan instan Apple Store / Web App privat Anda untuk langsung bermain layar penuh.\n\n' +
+      '2. PENGGUNA ANDROID:\n' +
+      '   Perhatian: Saking HOT dan beraninya materi tantangan ranjang di game ini, aplikasi ini DI-BANNED di Google Playstore!\n' +
+      '   Pasang paket installer APK resmi tanpa sensor ini langsung di ponsel Android Anda (aktifkan izin pasang dari sumber ini).\n\n' +
+      'Terima kasih telah bergabung. Selamat menikmati malam penuh gairah & tawa berdua!'
     ], { type: 'text/plain;charset=utf-8' });
     element.href = URL.createObjectURL(file);
     element.download = 'LoveCoupleGames-v1.4.2-Setup.txt';

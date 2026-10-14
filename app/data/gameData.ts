@@ -169,7 +169,7 @@ export const faqItems: FaqItem[] = [
   },
   {
     question: 'Bisa dimainkan di iPhone atau cuma Android?',
-    answer: 'Bisa di keduanya. Pengguna Android mendapatkan file APK siap pasang yang ringan dan cepat. Pengguna iPhone atau iPad mendapatkan akses Web App privat yang bisa disimpan ke Home Screen, berjalan dalam mode layar penuh tanpa bilah browser persis seperti aplikasi biasa.',
+    answer: 'Bisa banget di keduanya! Pengguna iPhone atau iPad bisa langsung mengakses game ini karena resmi tersedia di Apple Store (dan Web App privat). Sedangkan untuk Android—saking HOT dan beraninya materi tantangan ranjang pasutri di dalamnya—game ini resmi di-banned di Google Playstore! Tapi jangan khawatir, pengguna Android mendapatkan file APK resmi langsung dari kami yang 100% aman, privat, bebas sensor, dan siap dipasang langsung dalam hitungan detik.',
   },
   {
     question: 'Apakah ada biaya langganan bulanan setelah membeli?',
