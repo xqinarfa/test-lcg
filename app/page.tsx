@@ -4,7 +4,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import Header from './components/Header';
 import HeroSection from './components/HeroSection';
 import InsightSection from './components/InsightSection';
-import MiniBoardSection from './components/MiniBoardSection';
 import GameplaySection from './components/GameplaySection';
 import FeaturesSection from './components/FeaturesSection';
 import CardDeckSection from './components/CardDeckSection';
@@ -14,7 +13,7 @@ import OfferSection from './components/OfferSection';
 import Footer from './components/Footer';
 import MobileStickyBar from './components/MobileStickyBar';
 import CheckoutModal from './components/CheckoutModal';
-import { boardTiles, challengeDecks } from './data/gameData';
+import { challengeDecks } from './data/gameData';
 import { ModalStep, PaymentMethod } from './types';
 
 export default function Home() {
@@ -26,10 +25,6 @@ export default function Home() {
   const [copiedLicense, setCopiedLicense] = useState<boolean>(false);
   const [downloadStarted, setDownloadStarted] = useState<boolean>(false);
 
-  // Mini-Board & Dice State
-  const [activeTileIndex, setActiveTileIndex] = useState<number>(0);
-  const [diceValue, setDiceValue] = useState<number>(3);
-  const [isDiceRolling, setIsDiceRolling] = useState<boolean>(false);
 
   // Deck State
   const [activeDeckTab, setActiveDeckTab] = useState<number>(0);
@@ -71,50 +66,6 @@ export default function Home() {
     }
   };
 
-  // 2. Gentle wooden/resin tumble click for dice roll
-  const playDiceRollSound = () => {
-    const ctx = getAudioContext();
-    if (!ctx) return;
-    try {
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = 'triangle';
-      const randomFreq = 220 + Math.random() * 120;
-      osc.frequency.setValueAtTime(randomFreq, ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(140, ctx.currentTime + 0.04);
-      gain.gain.setValueAtTime(0.035, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.04);
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start();
-      osc.stop(ctx.currentTime + 0.045);
-    } catch {
-      // Audio prevented
-    }
-  };
-
-  // 3. Warm chime when dice finishes and lands on petak
-  const playDiceLandSound = () => {
-    const ctx = getAudioContext();
-    if (!ctx) return;
-    try {
-      const freqs = [523.25, 659.25]; // C5 & E5 intimate harmony
-      freqs.forEach((f, i) => {
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(f, ctx.currentTime + i * 0.04);
-        gain.gain.setValueAtTime(0.028, ctx.currentTime + i * 0.04);
-        gain.gain.exponentialRampToValueAtTime(0.0008, ctx.currentTime + i * 0.04 + 0.28);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start(ctx.currentTime + i * 0.04);
-        osc.stop(ctx.currentTime + i * 0.04 + 0.3);
-      });
-    } catch {
-      // Audio prevented
-    }
-  };
 
   // 4. Smooth card flick / shuffle swoosh
   const playCardShuffleSound = () => {
@@ -228,27 +179,6 @@ export default function Home() {
     }
   };
 
-  // Dice Roll Simulation with tumble clicks and landing chime
-  const handleRollDice = () => {
-    if (isDiceRolling) return;
-    playDiceRollSound();
-    setIsDiceRolling(true);
-
-    let rollCount = 0;
-    const interval = setInterval(() => {
-      setDiceValue(Math.floor(Math.random() * 6) + 1);
-      playDiceRollSound();
-      rollCount += 1;
-      if (rollCount >= 8) {
-        clearInterval(interval);
-        const finalRoll = Math.floor(Math.random() * 6) + 1;
-        setDiceValue(finalRoll);
-        setActiveTileIndex((prev) => (prev + finalRoll) % boardTiles.length);
-        setIsDiceRolling(false);
-        playDiceLandSound();
-      }
-    }, 70);
-  };
 
   // Switch card within category with card flick sound
   const handleShuffleCard = () => {
@@ -261,6 +191,11 @@ export default function Home() {
     playCardShuffleSound();
     setActiveDeckTab(idx);
     setCardIndexWithinTab(0);
+  };
+
+  const handleSelectTier = (tierIdx: number) => {
+    playClickSound();
+    setCardIndexWithinTab(tierIdx);
   };
 
   const handleToggleFaq = (idx: number) => {
@@ -340,18 +275,6 @@ export default function Home() {
 
         <InsightSection />
 
-        <div className="reveal-on-scroll">
-          <MiniBoardSection 
-            activeTileIndex={activeTileIndex}
-            diceValue={diceValue}
-            isDiceRolling={isDiceRolling}
-            onRollDice={handleRollDice}
-            onSelectTile={(idx) => {
-              playClickSound();
-              setActiveTileIndex(idx);
-            }}
-          />
-        </div>
 
         <div className="reveal-on-scroll">
           <GameplaySection />
@@ -367,6 +290,7 @@ export default function Home() {
             cardIndexWithinTab={cardIndexWithinTab}
             onSelectTab={handleSelectTab}
             onShuffleCard={handleShuffleCard}
+            onSelectTier={handleSelectTier}
           />
         </div>
 

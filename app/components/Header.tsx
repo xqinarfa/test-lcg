@@ -34,14 +34,14 @@ export default function Header({ onOpenModal, onScrollToSection }: HeaderProps) 
         </a>
         <div className="nav-actions">
           <a 
-            href="#simulasi-papan" 
+            href="#cara-main" 
             className="nav-link"
             onClick={(e) => {
               e.preventDefault();
-              onScrollToSection('simulasi-papan');
+              onScrollToSection('cara-main');
             }}
           >
-            Coba Dadu
+            Cara Main
           </a>
           <a 
             href="#bocoran-kartu" 

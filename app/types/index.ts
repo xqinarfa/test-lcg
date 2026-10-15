@@ -13,13 +13,16 @@ export interface BoardTile {
 export interface CardItem {
   prompt: string;
   rule: string;
-  duration: string;
+  duration?: string;
   intensity: number;
 }
 
 export interface ChallengeDeck {
   category: string;
   title: string;
+  frameImage?: string;
+  accentColor?: string;
+  hasTimer?: boolean;
   cards: CardItem[];
 }
 

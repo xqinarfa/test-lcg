@@ -148,8 +148,6 @@ export default function TestimonialSection({ onOpenModal: _onOpenModal }: Testim
             </div>
             <span className="trust-rating">4.9 / 5.0 Rating</span>
             <span className="trust-sep" aria-hidden="true">•</span>
-            <span className="trust-stat">1.200+ Pasutri Puas</span>
-            <span className="trust-sep" aria-hidden="true">•</span>
             <span className="trust-privacy">100% Privat Kamar Tidur</span>
           </motion.div>
         </motion.div>
