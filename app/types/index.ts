@@ -1,15 +1,3 @@
-// Definisi Tipe TypeScript untuk Love Couple Games
-
-export interface BoardTile {
-  name: string;
-  tag: string;
-  mission: string;
-  rule?: string;
-  duration?: string;
-  intensity?: number;
-  tip?: string;
-}
-
 export interface CardItem {
   prompt: string;
   rule: string;

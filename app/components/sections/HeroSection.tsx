@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import Button from './Button';
-import FigmaWaveDivider from './FigmaWaveDivider';
+import Button from '../ui/Button';
+import FigmaWaveDivider from '../ui/FigmaWaveDivider';
 
 export interface HeroSectionProps {
   onOpenModal: () => void;
@@ -74,7 +74,6 @@ export default function HeroSection({ onOpenModal, onScrollToSection }: HeroSect
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
-      {/* Figma Organic Waves Background with Parallax Depth & Continuous Framer Motion Loop */}
       <div 
         className="hero-figma-bg" 
         aria-hidden="true"
@@ -88,7 +87,6 @@ export default function HeroSection({ onOpenModal, onScrollToSection }: HeroSect
       </div>
 
       <div className="container hero-grid">
-        {/* Left: Headline & Copy with Gentle Scroll Parallax */}
         <div 
           className="hero-copy"
           style={{
@@ -110,7 +108,6 @@ export default function HeroSection({ onOpenModal, onScrollToSection }: HeroSect
             Main <strong>LOVE COUPLE GAMES!</strong> Game papan digital khusus pasutri untuk menghidupkan kembali gairah, tawa, dan keintiman panas berdua tanpa rasa canggung.
           </p>
 
-          {/* Transparent Pricing with Boss Copy */}
           <div className="price-block">
             <div className="price-tag-group">
               <span className="price-original">Rp 250.000</span>
@@ -120,7 +117,6 @@ export default function HeroSection({ onOpenModal, onScrollToSection }: HeroSect
             <span className="price-note">MURAH BANGET! BAYAR SEKALI AJA</span>
           </div>
 
-          {/* Action Buttons: Separated iOS & Android with original signature button style */}
           <div className="hero-actions">
             <Button 
               href="https://apps.apple.com"
@@ -156,7 +152,6 @@ export default function HeroSection({ onOpenModal, onScrollToSection }: HeroSect
           </div>
         </div>
 
-        {/* Right: Interactive 3D Phone Preview Mockup with Gyro Parallax */}
         <div 
           className="phone-mockup-wrapper"
           style={{
@@ -165,7 +160,6 @@ export default function HeroSection({ onOpenModal, onScrollToSection }: HeroSect
             willChange: 'transform',
           }}
         >
-          {/* Ambient Radial Aura Glow */}
           <div className="hero-phone-aura" aria-hidden="true" />
 
           <div 
@@ -196,7 +190,6 @@ export default function HeroSection({ onOpenModal, onScrollToSection }: HeroSect
         </div>
       </div>
 
-      {/* Prominent Multi-Layer Wave Divider from Figma separating Hero and Insight */}
       <FigmaWaveDivider
         position="bottom"
         fillColor="#0c080b"

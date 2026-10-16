@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Button from './Button';
-import { ModalStep, PaymentMethod } from '../types';
+import { ModalStep, PaymentMethod } from '../../types';
 
 export interface CheckoutModalProps {
   isOpen: boolean;
@@ -55,7 +55,6 @@ export default function CheckoutModal({
           &times;
         </button>
 
-        {/* Step 1: Selection */}
         {step === 'selection' && (
           <div>
             <div className="modal-header">
@@ -66,7 +65,6 @@ export default function CheckoutModal({
               <p>MURAH BANGET, BAYAR SEKALI AJA Rp 88.000!</p>
             </div>
 
-            {/* Step progress pills */}
             <div className="modal-flow-steps">
               <span className="step-badge active">1. Xendit</span>
               <span className="step-arrow">›</span>
@@ -164,7 +162,6 @@ export default function CheckoutModal({
           </div>
         )}
 
-        {/* Step 2: QRIS Simulation */}
         {step === 'qris' && (
           <div className="qris-view">
             <div className="modal-header">
@@ -206,7 +203,6 @@ export default function CheckoutModal({
           </div>
         )}
 
-        {/* Step 3: Success & Download Access */}
         {step === 'success' && (
           <div className="success-view">
             <div className="modal-header">
@@ -268,7 +264,6 @@ export default function CheckoutModal({
             ) : null}
 
             <div className="modal-platform-box">
-              {/* Apple iOS Store */}
               <div className="modal-platform-item modal-platform-ios">
                 <div className="modal-platform-head">
                   <div className="modal-platform-title">
@@ -291,7 +286,6 @@ export default function CheckoutModal({
                 </button>
               </div>
 
-              {/* Android Banned Notice & Direct APK */}
               <div className="modal-platform-item modal-platform-android">
                 <div className="modal-platform-head">
                   <div className="modal-platform-title">
@@ -300,15 +294,12 @@ export default function CheckoutModal({
                     </svg>
                     <span>Android (Semua Tipe HP)</span>
                   </div>
-                  <span className="modal-platform-badge-banned">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style={{ display: 'inline-block', marginRight: '4px', verticalAlign: '-1px' }}>
-                      <path d="M12 23a7.5 7.5 0 0 1-5.138-12.963C8.204 8.774 11.5 6.5 11 1.5c6 4 9 8 3 14 1 0 2.5 0 3-1.5.5 2-1 9-5 9z"/>
-                    </svg>
-                    BANNED DI PLAYSTORE
+                  <span className="modal-platform-badge-store">
+                    ✓ APK Resmi Tanpa Sensor
                   </span>
                 </div>
                 <p className="modal-platform-desc">
-                  Saking <em>hot &amp; berani</em>-nya tantangan intim di game ini, Google Playstore melarangnya. Unduh installer APK resmi langsung (100% aman, privat, &amp; tanpa sensor):
+                  Paket installer APK resmi langsung untuk semua HP Android. 100% aman, privat, bebas sensor, dan siap dipasang:
                 </p>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '4px 0 10px' }}>
                   <span style={{ fontSize: '0.72rem', color: 'var(--accent-gold-light)', background: 'rgba(230, 185, 128, 0.12)', padding: '2px 8px', borderRadius: '4px', border: '1px solid rgba(230, 185, 128, 0.25)' }}>

@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { faqItems } from '../data/gameData';
+import { faqItems } from '../../data/gameData';
 
 export interface FaqSectionProps {
   openFaqIndex: number | null;

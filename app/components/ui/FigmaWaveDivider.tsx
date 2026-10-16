@@ -55,7 +55,6 @@ export default function FigmaWaveDivider({
       }}
       aria-hidden="true"
     >
-      {/* Layer 1: Animated Secondary Accent Wave (Rose Ribbon - Flows to Right) */}
       {secondaryFillColor && (
         <motion.div
           style={{
@@ -89,7 +88,6 @@ export default function FigmaWaveDivider({
         </motion.div>
       )}
 
-      {/* Layer 2: Animated Solid Main Wave & Gold Crest Contour (Flows to Left) */}
       <motion.div
         style={{
           position: 'absolute',
@@ -124,10 +122,8 @@ export default function FigmaWaveDivider({
             </filter>
           </defs>
 
-          {/* Solid fill extending deeply downwards with NO stroke to guarantee zero bottom border */}
           <path d={MAIN_FILL} fill={fillColor} />
 
-          {/* Prominent Gold Crest Line - ONLY traces the upper wave contour; NO bottom or side strokes */}
           {strokeColor && (
             <path
               d={MAIN_CREST}

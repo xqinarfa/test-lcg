@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { painPoints } from '../data/gameData';
+import { painPoints } from '../../data/gameData';
 
 export default function InsightSection() {
   const containerRef = useRef<HTMLElement>(null);
@@ -66,9 +66,6 @@ export default function InsightSection() {
   ];
 
   const getCardStyle = (index: number): React.CSSProperties => {
-    // Card 0 (First card):
-    // Resting position: slightly tilted to the left (-2.8deg, -10px)
-    // Slides up & left between 0.18 and 0.38 to reveal Card 1 underneath
     if (index === 0) {
       if (scrollProgress < 0.18) {
         return {
@@ -99,11 +96,6 @@ export default function InsightSection() {
       };
     }
 
-    // Card 1 (Second card):
-    // Resting position: tilted noticeably to the right (+5.8deg, +24px, +14px)
-    // Rises to top between 0.18 and 0.38 as Card 0 slides away
-    // Stays active on top between 0.38 and 0.55 with a natural subtle tilt (+1.8deg)
-    // Slides up & right between 0.55 and 0.75 to reveal Card 2 underneath
     if (index === 1) {
       if (scrollProgress < 0.18) {
         return {
@@ -155,11 +147,6 @@ export default function InsightSection() {
       };
     }
 
-    // Card 2 (Third card):
-    // Resting position: tilted noticeably to the left (-6.8deg, -24px, +28px)
-    // Steps up to secondary spot between 0.18 and 0.38 (-4.3deg, -14px, +14px)
-    // Rises to top between 0.55 and 0.75 as Card 1 slides away
-    // Stays fully revealed from 0.75 onwards with subtle organic angle (-0.8deg)
     if (index === 2) {
       if (scrollProgress < 0.18) {
         return {

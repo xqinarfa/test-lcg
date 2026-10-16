@@ -1,55 +1,4 @@
-import { BoardTile, ChallengeDeck, FaqItem, PainPoint, GameplayStep, FeaturePillar, TestimonialItem } from '../types';
-
-export const boardTiles: BoardTile[] = [
-  {
-    name: 'Pemanasan Santai',
-    tag: 'Obrolan Mesra',
-    mission: 'Pegang kedua tangan pasangan, tatap matanya selama 30 detik tanpa kata, lalu ceritakan satu hal yang paling kamu kagumi darinya minggu ini.',
-    rule: 'Aturan: Pasangan hanya mendengarkan sambil menatap mata tanpa memotong.',
-    duration: '1 Menit',
-    intensity: 1,
-  },
-  {
-    name: 'Bicara Jujur',
-    tag: 'Kejujuran Intim',
-    mission: 'Ceritakan satu fantasi atau sentuhan yang diam-diam selalu kamu nantikan saat kita sedang berduaan di kamar.',
-    rule: 'Aturan: Suasana santai dan tanpa penghakiman sama sekali.',
-    duration: '2 Menit',
-    intensity: 1,
-  },
-  {
-    name: 'Sentuhan Lembut',
-    tag: 'Foreplay Perlahan',
-    mission: 'Berikan ciuman lembut di sepanjang garis rahang dan leher pasangan dengan tempo perlahan, tanpa sentuhan tangan.',
-    rule: 'Aturan: Pasangan yang dicium menutup mata dan menarik napas dalam.',
-    duration: '60 Detik',
-    intensity: 2,
-  },
-  {
-    name: 'Pijatan Relaksasi',
-    tag: 'Sentuhan Fisik',
-    mission: 'Pijat lembut pundak dan tengkuk leher pasangan untuk melepaskan kepenatan seharian sebelum masuk ke babak berikutnya.',
-    rule: 'Aturan: Gunakan ibu jari secara perlahan dari leher turun ke bahu.',
-    duration: '3 Menit',
-    intensity: 2,
-  },
-  {
-    name: 'Tantangan Sensual',
-    tag: 'Tantangan Ranjang',
-    mission: 'Lepaskan satu helai pakaian pasangan hanya dengan satu tangan sambil tetap menjaga kontak mata berdua.',
-    rule: 'Aturan: Lakukan dengan tempo lambat tanpa terburu-buru.',
-    duration: '2 Menit',
-    intensity: 3,
-  },
-  {
-    name: 'Kamar Puncak',
-    tag: 'Eksplorasi Puncak',
-    mission: 'Tentukan posisi atau variasi favorit berdua untuk menutup permainan malam ini dengan keintiman penuh.',
-    rule: 'Aturan: Nikmati momen berdua sepuasnya tanpa batasan waktu.',
-    duration: 'Tanpa Batas',
-    intensity: 3,
-  },
-];
+import { ChallengeDeck, FaqItem, PainPoint, GameplayStep, FeaturePillar, TestimonialItem } from '../types';
 
 export const challengeDecks: ChallengeDeck[] = [
   {
@@ -175,7 +124,7 @@ export const faqItems: FaqItem[] = [
   },
   {
     question: 'Bisa dimainkan di iPhone atau cuma Android?',
-    answer: 'Bisa banget di keduanya! Pengguna iPhone atau iPad bisa langsung mengakses game ini karena resmi tersedia di Apple Store (dan Web App privat). Sedangkan untuk Android—saking HOT dan beraninya materi tantangan ranjang pasutri di dalamnya—game ini resmi di-banned di Google Playstore! Tapi jangan khawatir, pengguna Android mendapatkan file APK resmi langsung dari kami yang 100% aman, privat, bebas sensor, dan siap dipasang langsung dalam hitungan detik.',
+    answer: 'Bisa banget di keduanya! Pengguna iPhone atau iPad bisa langsung mengakses game ini melalui Apple Store (dan Web App privat). Sedangkan untuk pengguna Android, Anda mendapatkan paket file APK resmi langsung tanpa sensor yang 100% aman, privat, dan siap dipasang langsung dalam hitungan detik.',
   },
   {
     question: 'Apakah ada biaya langganan bulanan setelah membeli?',

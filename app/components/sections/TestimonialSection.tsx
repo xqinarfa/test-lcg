@@ -2,13 +2,12 @@
 
 import React from 'react';
 import { motion, useReducedMotion, type Variants } from 'framer-motion';
-import { testimonials } from '../data/gameData';
+import { testimonials } from '../../data/gameData';
 
 export interface TestimonialSectionProps {
   onOpenModal?: () => void;
 }
 
-// SVG Star Icon for razor-sharp rendering on Retina/mobile
 function StarIcon() {
   return (
     <svg 
@@ -25,7 +24,6 @@ function StarIcon() {
   );
 }
 
-// SVG Checkmark Icon
 function CheckIcon() {
   return (
     <svg 
@@ -44,7 +42,6 @@ function CheckIcon() {
   );
 }
 
-// Interlocking Wedding Rings SVG Icon (Authored Vector, replacing emoji)
 function InterlockingRingsIcon() {
   return (
     <svg 
@@ -64,7 +61,6 @@ function InterlockingRingsIcon() {
     </svg>
   );
 }
-// Framer Motion Animation Variants
 const headerContainerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
@@ -88,7 +84,7 @@ const headerItemVariants: Variants = {
 export default function TestimonialSection({ onOpenModal: _onOpenModal }: TestimonialSectionProps) {
   const shouldReduceMotion = useReducedMotion();
 
-  // Quadruple items to guarantee seamless 100% infinite loop even on ultra-wide screens
+  // Repeat items for seamless marquee loop on wide displays
   const marqueeCards = [
     ...testimonials,
     ...testimonials,
@@ -102,14 +98,12 @@ export default function TestimonialSection({ onOpenModal: _onOpenModal }: Testim
       id="testimoni" 
       aria-labelledby="testimonial-heading"
     >
-      {/* Subtle Ambient Glow Background Orbs */}
       <div className="testimonial-ambient-glow" aria-hidden="true">
         <div className="glow-orb glow-orb-gold" />
         <div className="glow-orb glow-orb-rose" />
       </div>
 
       <div className="container">
-        {/* Clean, authoritative header with Framer Motion orchestration */}
         <motion.div 
           className="section-header text-center"
           variants={headerContainerVariants}
@@ -132,7 +126,6 @@ export default function TestimonialSection({ onOpenModal: _onOpenModal }: Testim
             Cerita jujur dari pasangan suami istri yang hubungannya kembali mesra, hangat, dan bergairah berkat Love Couple Games.
           </motion.p>
 
-          {/* Minimalist Trust Indicator with Framer Motion Spring */}
           <motion.div 
             className="testimonial-simple-trust"
             variants={headerItemVariants}
@@ -153,7 +146,6 @@ export default function TestimonialSection({ onOpenModal: _onOpenModal }: Testim
         </motion.div>
       </div>
 
-      {/* Infinite Loop Marquee Showcase */}
       <div 
         className={`testimonial-marquee-wrapper ${shouldReduceMotion ? 'reduced-motion' : ''}`}
         aria-label="Ulasan Pasutri Berputar Otomatis"
@@ -170,7 +162,6 @@ export default function TestimonialSection({ onOpenModal: _onOpenModal }: Testim
               }}
               whileTap={{ scale: 0.985 }}
             >
-              {/* Decorative Watermark Quotation Icon */}
               <svg 
                 className="card-quote-watermark" 
                 viewBox="0 0 24 24" 
@@ -180,7 +171,6 @@ export default function TestimonialSection({ onOpenModal: _onOpenModal }: Testim
                 <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
               </svg>
 
-              {/* Card Top: Stars & Verified status */}
               <div className="card-simple-header">
                 <div className="card-simple-stars" aria-label={`Rating ${item.rating || 5} bintang`}>
                   {[...Array(5)].map((_, i) => (
@@ -193,17 +183,14 @@ export default function TestimonialSection({ onOpenModal: _onOpenModal }: Testim
                 </div>
               </div>
 
-              {/* Bold Highlight Pull-Quote */}
               <h3 className="card-simple-highlight">
                 &ldquo;{item.highlight}&rdquo;
               </h3>
 
-              {/* Honest Story Quote */}
               <blockquote className="card-simple-quote">
                 &ldquo;{item.quote}&rdquo;
               </blockquote>
 
-              {/* Author Footer */}
               <div className="card-simple-author">
                 <div className="card-simple-avatar" aria-hidden="true">
                   {item.avatarText}

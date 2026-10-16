@@ -1,23 +1,22 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import Header from './components/Header';
-import HeroSection from './components/HeroSection';
-import InsightSection from './components/InsightSection';
-import GameplaySection from './components/GameplaySection';
-import FeaturesSection from './components/FeaturesSection';
-import CardDeckSection from './components/CardDeckSection';
-import FaqSection from './components/FaqSection';
-import TestimonialSection from './components/TestimonialSection';
-import OfferSection from './components/OfferSection';
-import Footer from './components/Footer';
-import MobileStickyBar from './components/MobileStickyBar';
-import CheckoutModal from './components/CheckoutModal';
+import Header from './components/layout/Header';
+import Footer from './components/layout/Footer';
+import HeroSection from './components/sections/HeroSection';
+import InsightSection from './components/sections/InsightSection';
+import GameplaySection from './components/sections/GameplaySection';
+import FeaturesSection from './components/sections/FeaturesSection';
+import CardDeckSection from './components/sections/CardDeckSection';
+import TestimonialSection from './components/sections/TestimonialSection';
+import FaqSection from './components/sections/FaqSection';
+import OfferSection from './components/sections/OfferSection';
+import MobileStickyBar from './components/ui/MobileStickyBar';
+import CheckoutModal from './components/ui/CheckoutModal';
 import { challengeDecks } from './data/gameData';
 import { ModalStep, PaymentMethod } from './types';
 
 export default function Home() {
-  // Modal State
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modalStep, setModalStep] = useState<ModalStep>('selection');
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('qris');
@@ -25,12 +24,8 @@ export default function Home() {
   const [copiedLicense, setCopiedLicense] = useState<boolean>(false);
   const [downloadStarted, setDownloadStarted] = useState<boolean>(false);
 
-
-  // Deck State
   const [activeDeckTab, setActiveDeckTab] = useState<number>(0);
   const [cardIndexWithinTab, setCardIndexWithinTab] = useState<number>(0);
-
-  // FAQ Accordion State
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
@@ -45,7 +40,6 @@ export default function Home() {
     }
   };
 
-  // 1. Crisp tactile button click
   const playClickSound = () => {
     const ctx = getAudioContext();
     if (!ctx) return;
@@ -61,13 +55,10 @@ export default function Home() {
       gain.connect(ctx.destination);
       osc.start();
       osc.stop(ctx.currentTime + 0.06);
-    } catch {
-      // Audio prevented
-    }
+    } catch {}
   };
 
 
-  // 4. Smooth card flick / shuffle swoosh
   const playCardShuffleSound = () => {
     const ctx = getAudioContext();
     if (!ctx) return;
@@ -83,12 +74,9 @@ export default function Home() {
       gain.connect(ctx.destination);
       osc.start();
       osc.stop(ctx.currentTime + 0.09);
-    } catch {
-      // Audio prevented
-    }
+    } catch {}
   };
 
-  // 5. Success melodic chime for activation
   const playSuccessChime = () => {
     const ctx = getAudioContext();
     if (!ctx) return;
@@ -107,9 +95,7 @@ export default function Home() {
         osc.start(start);
         osc.stop(start + 0.48);
       });
-    } catch {
-      // Audio prevented
-    }
+    } catch {}
   };
 
   const handleOpenModal = () => {
@@ -152,7 +138,6 @@ export default function Home() {
     playClickSound();
     setDownloadStarted(true);
     
-    // Simulate real download trigger
     const element = document.createElement('a');
     const file = new Blob([
       'Love Couple Games v1.4.2 - Paket Pasutri Resmi\n' +
@@ -160,7 +145,6 @@ export default function Home() {
       '1. PENGGUNA APPLE iOS (iPhone / iPad):\n' +
       '   Aplikasi ini resmi tersedia di Apple Store. Buka tautan instan Apple Store / Web App privat Anda untuk langsung bermain layar penuh.\n\n' +
       '2. PENGGUNA ANDROID:\n' +
-      '   Perhatian: Saking HOT dan beraninya materi tantangan ranjang di game ini, aplikasi ini DI-BANNED di Google Playstore!\n' +
       '   Pasang paket installer APK resmi tanpa sensor ini langsung di ponsel Android Anda (aktifkan izin pasang dari sumber ini).\n\n' +
       'Terima kasih telah bergabung. Selamat menikmati malam penuh gairah & tawa berdua!'
     ], { type: 'text/plain;charset=utf-8' });
@@ -180,7 +164,6 @@ export default function Home() {
   };
 
 
-  // Switch card within category with card flick sound
   const handleShuffleCard = () => {
     playCardShuffleSound();
     const currentTabCards = challengeDecks[activeDeckTab].cards;
@@ -214,7 +197,6 @@ export default function Home() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isModalOpen]);
 
-  // Timer countdown effect for QRIS
   useEffect(() => {
     if (isModalOpen && modalStep === 'qris') {
       timerRef.current = setInterval(() => {
@@ -232,7 +214,7 @@ export default function Home() {
     };
   }, [isModalOpen, modalStep]);
 
-  // Scroll Reveal Observer for hardware-accelerated fluid section reveals
+  // Scroll reveal observer
   useEffect(() => {
     if (typeof window === 'undefined') return;
     const observer = new IntersectionObserver(
@@ -253,7 +235,6 @@ export default function Home() {
     return () => observer.disconnect();
   }, []);
 
-  // Format timer mm:ss
   const formatTime = (seconds: number): string => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;

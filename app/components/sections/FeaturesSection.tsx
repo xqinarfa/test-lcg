@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { featurePillars } from '../data/gameData';
+import { featurePillars } from '../../data/gameData';
 
 export default function FeaturesSection() {
   return (

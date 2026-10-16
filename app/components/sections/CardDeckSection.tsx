@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { challengeDecks } from '../data/gameData';
+import { challengeDecks } from '../../data/gameData';
 
 export interface CardDeckSectionProps {
   activeDeckTab: number;
@@ -118,9 +118,7 @@ export default function CardDeckSection({
       gain.connect(ctx.destination);
       osc.start();
       osc.stop(ctx.currentTime + 0.65);
-    } catch {
-      // Audio prevented
-    }
+    } catch { }
   };
 
   const handleToggleTimer = () => {
@@ -240,12 +238,27 @@ export default function CardDeckSection({
   return (
     <section className="deck-section" id="bocoran-kartu">
       <div className="container">
-        {/* Header with Eyebrow Chip */}
         <div className="deck-header">
-          <div className="deck-eyebrow-chip">
-            <span className="chip-sparkle" aria-hidden="true">✨</span>
-            <span>BOCORAN RESMI GAME</span>
-            <span className="chip-badge">120+ KARTU</span>
+          <div className="deck-katalog-badge" role="note" aria-label="Katalog 120+ kartu tantangan">
+            <svg
+              className="deck-katalog-icon"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <rect x="3" y="5" width="13" height="16" rx="2" />
+              <path d="M8 2h10a2 2 0 0 1 2 2v15" opacity="0.6" />
+              <path d="M7 11h5" opacity="0.6" />
+            </svg>
+            <span className="deck-katalog-label">Katalog Kartu Pasutri</span>
+            <span className="deck-katalog-separator" aria-hidden="true" />
+            <span className="deck-katalog-count">120+ Kartu Tantangan</span>
           </div>
           <h2 className="section-title">
             Contoh Kartu Tantangan yang Akan Kalian Mainkan
@@ -255,7 +268,6 @@ export default function CardDeckSection({
           </p>
         </div>
 
-        {/* 4 Tabs with Sliding Liquid Pill Animation */}
         <div className="deck-tabs" role="tablist" aria-label="Kategori Kartu Tantangan">
           {challengeDecks.map((deck, idx) => {
             const isActive = activeDeckTab === idx;
@@ -284,17 +296,14 @@ export default function CardDeckSection({
           })}
         </div>
 
-        {/* Card Showcase Stage with 3D Stacked Deck */}
         <div className="card-showcase-wrapper">
-          {/* Glowing Ambient Backdrop Aura */}
-          <div 
+          <div
             className="deck-card-ambient-aura"
             style={{
               background: currentMeta.auraColor,
             }}
           />
 
-          {/* 3D Stack Deck Stage: All 4 Category Cards Visible Simultaneously */}
           <div className="card-deck-stack-stage">
             {challengeDecks.map((deck, idx) => {
               const isActive = idx === activeDeckTab;
@@ -326,10 +335,10 @@ export default function CardDeckSection({
                   whileHover={
                     !isActive
                       ? {
-                          y: transform.y - 12,
-                          scale: transform.scale * 1.03,
-                          transition: { duration: 0.2 },
-                        }
+                        y: transform.y - 12,
+                        scale: transform.scale * 1.03,
+                        transition: { duration: 0.2 },
+                      }
                       : undefined
                   }
                   onClick={!isActive ? () => onSelectTab(idx) : undefined}
@@ -338,33 +347,30 @@ export default function CardDeckSection({
                   onKeyDown={!isActive ? (e) => { if (e.key === 'Enter' || e.key === ' ') onSelectTab(idx); } : undefined}
                   aria-label={!isActive ? `Buka kategori ${deck.title}` : undefined}
                 >
-                  {/* Card Frame Inner with 3D Mouse Tilt (Active Only) */}
                   <motion.div
                     className="game-card-frame-inner"
                     style={
                       isActive
                         ? {
-                            rotateX,
-                            rotateY,
-                          }
+                          rotateX,
+                          rotateY,
+                        }
                         : undefined
                     }
                     onMouseMove={isActive ? handleMouseMoveCard : undefined}
                     onMouseLeave={isActive ? handleMouseLeaveCard : undefined}
                   >
-                    <img 
-                      src={deck.frameImage || '/assets/images/card-reward-frame.jpg'} 
-                      alt={`${deck.title} - ${card.rule}`} 
+                    <img
+                      src={deck.frameImage || '/assets/images/card-reward-frame.jpg'}
+                      alt={`${deck.title} - ${card.rule}`}
                       className="game-card-bg-img"
                       width={935}
                       height={1024}
                       loading="eager"
                     />
 
-                    {/* Subtle Holographic Glare */}
                     <div className="game-card-sheen" aria-hidden="true" />
 
-                    {/* Overlaid Prompt inside blank container area */}
                     <div className="game-card-blank-area">
                       <div className="game-card-tier-indicator">
                         <span className="tier-star-text" aria-hidden="true">
@@ -386,7 +392,6 @@ export default function CardDeckSection({
                       </AnimatePresence>
                     </div>
 
-                    {/* Inactive Card: Scrim, Category Badge, and Hover Peek Cue */}
                     {!isActive && (
                       <>
                         <div className="stacked-card-scrim" aria-hidden="true" />
@@ -400,7 +405,6 @@ export default function CardDeckSection({
                       </>
                     )}
 
-                    {/* Active Card: Interactive Start Timer overlay (Reward & Punishment only) */}
                     {cardHasTimer && (
                       <motion.button
                         type="button"
@@ -431,9 +435,7 @@ export default function CardDeckSection({
             })}
           </div>
 
-          {/* Details Panel for Active Card */}
           <div className="game-card-details-panel">
-            {/* Elegant Rule Card */}
             <div className="game-card-rule-card">
               <div className="rule-card-header">
                 <div className="rule-badge">
@@ -447,7 +449,7 @@ export default function CardDeckSection({
                 </div>
 
                 {hasTimer && currentCard.duration && (
-                  <motion.div 
+                  <motion.div
                     className="rule-duration-tag"
                     initial={{ scale: 0.9, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
@@ -466,7 +468,6 @@ export default function CardDeckSection({
               </p>
             </div>
 
-            {/* Centered Actions: Shuffle Button & Counter */}
             <div className="game-card-action-center">
               <motion.button
                 type="button"
@@ -475,17 +476,17 @@ export default function CardDeckSection({
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.96 }}
               >
-                <motion.svg 
+                <motion.svg
                   animate={{ rotate: isShuffling ? 360 : 0 }}
                   transition={{ duration: 0.45, ease: 'easeInOut' }}
-                  width="17" 
-                  height="17" 
-                  viewBox="0 0 24 24" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  strokeWidth="2.4" 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round" 
+                  width="17"
+                  height="17"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.4"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   aria-hidden="true"
                 >
                   <polyline points="16 3 21 3 21 8"></polyline>
@@ -496,7 +497,7 @@ export default function CardDeckSection({
                 </motion.svg>
                 <span>Acak Contoh Kartu Lain</span>
               </motion.button>
-              
+
               <span className="card-count-indicator">
                 Kartu {cardIndexWithinTab + 1} dari {totalCards} • Kategori {currentDeck.title}
               </span>

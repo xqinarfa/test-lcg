@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { gameplaySteps } from '../data/gameData';
+import { gameplaySteps } from '../../data/gameData';
 
 export default function GameplaySection() {
   const [tilt, setTilt] = React.useState<{ x: number; y: number; activeIndex: number | null }>({ x: 0, y: 0, activeIndex: null });
@@ -20,7 +20,6 @@ export default function GameplaySection() {
   return (
     <section className="gameplay-section" id="cara-main">
       <div className="container gameplay-grid">
-        {/* Steps Guide */}
         <div>
           <span className="faq-kicker">Alur Permainan</span>
           <h2 className="section-title">
@@ -48,7 +47,6 @@ export default function GameplaySection() {
           </div>
         </div>
 
-        {/* Visual Character Customization Dual Phones with 3D Depth Tilt */}
         <div className="dual-phones-container">
           <div className="dual-phones">
             <div 
