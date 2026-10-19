@@ -20,34 +20,52 @@ export interface CardDeckSectionProps {
   onSelectTier?: (tierIdx: number) => void;
 }
 
-const categoryMetadata: Record<
-  string,
-  {
-    tagline: string;
-    auraColor: string;
-    tierLabels: [string, string, string];
-  }
-> = {
-  Reward: {
-    tagline: 'Hadiah manis dan apresiasi sentuhan hangat untuk memanjakan pasangan setelah berhasil menyelesaikan misi.',
-    auraColor: 'radial-gradient(circle, rgba(234, 179, 8, 0.35) 0%, rgba(202, 138, 4, 0.12) 50%, transparent 70%)',
-    tierLabels: ['Pemanasan Manis', 'Sentuhan Lembut', 'Kedekatan Hangat'],
-  },
-  Punishment: {
-    tagline: 'Hukuman manis dan seru yang menyenangkan—membuat suasana semakin hangat dan bikin nagih.',
-    auraColor: 'radial-gradient(circle, rgba(239, 68, 68, 0.35) 0%, rgba(220, 38, 38, 0.14) 50%, transparent 70%)',
-    tierLabels: ['Tantangan Lembut', 'Godaan Seru', 'Aksi Berdua'],
-  },
-  Truth: {
-    tagline: 'Membongkar rahasia romantis, kenangan nostalgia masa pacaran, dan isi hati terdalam tanpa rasa canggung.',
-    auraColor: 'radial-gradient(circle, rgba(6, 182, 212, 0.35) 0%, rgba(2, 132, 199, 0.14) 50%, transparent 70%)',
-    tierLabels: ['Nostalgia Manis', 'Kejujuran Hati', 'Rahasia Terdalam'],
-  },
-  Dare: {
-    tagline: 'Aksi berani yang memecah kekakuan suasana dan langsung menyulut percikan chemistry berdua.',
-    auraColor: 'radial-gradient(circle, rgba(249, 115, 22, 0.35) 0%, rgba(234, 88, 12, 0.14) 50%, transparent 70%)',
-    tierLabels: ['Bisikan Menggoda', 'Ciuman Spontan', 'Pose Ceria Berdua'],
-  },
+const CATEGORY_AURAS: Record<string, string> = {
+  Reward: 'radial-gradient(circle, rgba(234, 179, 8, 0.35) 0%, rgba(202, 138, 4, 0.12) 50%, transparent 70%)',
+  Punishment: 'radial-gradient(circle, rgba(239, 68, 68, 0.35) 0%, rgba(220, 38, 38, 0.14) 50%, transparent 70%)',
+  Truth: 'radial-gradient(circle, rgba(6, 182, 212, 0.35) 0%, rgba(2, 132, 199, 0.14) 50%, transparent 70%)',
+  Dare: 'radial-gradient(circle, rgba(249, 115, 22, 0.35) 0%, rgba(234, 88, 12, 0.14) 50%, transparent 70%)',
+};
+
+// Slot map: circular slot offset (-2, -1, 0, 1, 2) per active index
+const STACK_SLOTS = [
+  [0, 1, 2, -1],
+  [-1, 0, 1, 2],
+  [-2, -1, 0, 1],
+  [1, -2, -1, 0],
+];
+
+// Breakpoint configurations for stacked deck: [mobile <600, smallTablet <768, tablet <1024, desktop >=1024]
+const BREAKPOINT_STEPS = [
+  { stepX: 24, stepY: 6, stepRot: 2.5, scaleDelta: 0.04, opDelta: 0.12 },
+  { stepX: 55, stepY: 8, stepRot: 3.5, scaleDelta: 0.055, opDelta: 0.08 },
+  { stepX: 95, stepY: 10, stepRot: 4.2, scaleDelta: 0.055, opDelta: 0.08 },
+  { stepX: 165, stepY: 13, stepRot: 5.4, scaleDelta: 0.055, opDelta: 0.08 },
+];
+
+const parseDurationSeconds = (durStr?: string) =>
+  durStr ? parseInt(durStr, 10) * (durStr.includes('Menit') ? 60 : 1) || 30 : 0;
+
+let sharedAudioCtx: AudioContext | null = null;
+const playTimerFinishSound = () => {
+  try {
+    const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+    if (!AudioCtx) return;
+    if (!sharedAudioCtx) sharedAudioCtx = new AudioCtx();
+    const ctx = sharedAudioCtx;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(523.25, ctx.currentTime);
+    osc.frequency.setValueAtTime(659.25, ctx.currentTime + 0.12);
+    osc.frequency.setValueAtTime(783.99, ctx.currentTime + 0.24);
+    gain.gain.setValueAtTime(0.08, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.6);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + 0.65);
+  } catch {}
 };
 
 export default function CardDeckSection({
@@ -60,21 +78,11 @@ export default function CardDeckSection({
 
   const currentDeck = challengeDecks[activeDeckTab] || challengeDecks[0];
   const currentCard = currentDeck.cards[cardIndexWithinTab] || currentDeck.cards[0];
-  const currentMeta = categoryMetadata[currentDeck.category] || categoryMetadata.Reward;
+  const currentAura = CATEGORY_AURAS[currentDeck.category] || CATEGORY_AURAS.Reward;
 
   const isDeckTimerEnabled =
     currentDeck.hasTimer ?? (currentDeck.category === 'Reward' || currentDeck.category === 'Punishment');
   const hasTimer = Boolean(isDeckTimerEnabled && currentCard.duration);
-
-  // Helper to parse duration string to seconds
-  const parseDurationSeconds = (durStr?: string): number => {
-    if (!durStr) return 0;
-    const numMatch = durStr.match(/\d+/);
-    if (!numMatch) return 30;
-    const num = parseInt(numMatch[0], 10);
-    if (durStr.toLowerCase().includes('menit')) return num * 60;
-    return num;
-  };
 
   const initialDuration = parseDurationSeconds(currentCard.duration);
   const [timeLeft, setTimeLeft] = useState<number>(initialDuration);
@@ -83,113 +91,57 @@ export default function CardDeckSection({
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const timerIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Horizontal drag-scroll and tab references
+  // Responsive breakpoint index (0: mobile, 1: smallTablet, 2: tablet, 3: desktop)
+  // Only updates when crossing breakpoints — zero re-renders on arbitrary resize
+  const [bpIdx, setBpIdx] = useState<number>(() => {
+    if (typeof window === 'undefined') return 3;
+    const w = window.innerWidth;
+    return w < 600 ? 0 : w < 768 ? 1 : w < 1024 ? 2 : 3;
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      const w = window.innerWidth;
+      const nextBp = w < 600 ? 0 : w < 768 ? 1 : w < 1024 ? 2 : 3;
+      setBpIdx((prev) => (prev !== nextBp ? nextBp : prev));
+    };
+    window.addEventListener('resize', handleResize, { passive: true });
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Tabs scroll reference
   const tabsContainerRef = useRef<HTMLDivElement | null>(null);
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
-  const isTabsPointerDown = useRef<boolean>(false);
-  const tabsStartX = useRef<number>(0);
-  const tabsScrollLeft = useRef<number>(0);
-
-  // Fallback touch swipe detection for legacy mobile touchscreens
-  const touchStartX = useRef<number | null>(null);
-  const touchStartY = useRef<number | null>(null);
 
   const totalDecks = challengeDecks.length;
+  const handleNextTab = () => onSelectTab((activeDeckTab + 1) % totalDecks);
+  const handlePrevTab = () => onSelectTab((activeDeckTab - 1 + totalDecks) % totalDecks);
 
-  const handleNextTab = () => {
-    const nextIdx = (activeDeckTab + 1) % totalDecks;
-    onSelectTab(nextIdx);
-  };
-
-  const handlePrevTab = () => {
-    const prevIdx = (activeDeckTab - 1 + totalDecks) % totalDecks;
-    onSelectTab(prevIdx);
-  };
-
-  // Tabs mouse drag scroll
-  const handleTabsMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!tabsContainerRef.current) return;
-    isTabsPointerDown.current = true;
-    tabsStartX.current = e.pageX - tabsContainerRef.current.offsetLeft;
-    tabsScrollLeft.current = tabsContainerRef.current.scrollLeft;
-  };
-
-  const handleTabsMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!isTabsPointerDown.current || !tabsContainerRef.current) return;
-    e.preventDefault();
-    const x = e.pageX - tabsContainerRef.current.offsetLeft;
-    const walk = (x - tabsStartX.current) * 1.5;
-    tabsContainerRef.current.scrollLeft = tabsScrollLeft.current - walk;
-  };
-
-  const handleTabsMouseUp = () => {
-    isTabsPointerDown.current = false;
-  };
-
-  // Stage touch swipe fallback
-  const handleStageTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX;
-    touchStartY.current = e.touches[0].clientY;
-  };
-
-  const handleStageTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartX.current === null || touchStartY.current === null) return;
-    const diffX = e.changedTouches[0].clientX - touchStartX.current;
-    const diffY = e.changedTouches[0].clientY - touchStartY.current;
-    if (Math.abs(diffX) > 35 && Math.abs(diffX) > Math.abs(diffY) * 1.1) {
-      if (diffX < 0) {
-        handleNextTab();
-      } else {
-        handlePrevTab();
-      }
-    }
-    touchStartX.current = null;
-    touchStartY.current = null;
-  };
-
-  // Smoothly center active tab in horizontal scroll container
+  // Smoothly center active tab in scroll container
   useEffect(() => {
     const tabEl = tabRefs.current[activeDeckTab];
     if (tabEl && tabsContainerRef.current) {
-      tabEl.scrollIntoView({
-        behavior: 'smooth',
-        inline: 'center',
-        block: 'nearest',
-      });
+      tabEl.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
     }
   }, [activeDeckTab]);
 
-  // Framer Motion Dynamic Drag Physics & Tilting
+  // Framer Motion Dynamic Drag Physics & Tilt
   const dragX = useMotionValue(0);
-  const dragRotateZ = useTransform(
-    dragX,
-    [-220, 220],
-    shouldReduceMotion ? [0, 0] : [-10, 10]
-  );
+  const dragRotateZ = useTransform(dragX, [-220, 220], shouldReduceMotion ? [0, 0] : [-10, 10]);
 
   // 3D Card Hover Motion Values
   const cardX = useMotionValue(0);
   const cardY = useMotionValue(0);
   const springCfg = { stiffness: 220, damping: 24, mass: 0.8 };
-  const rotateX = useSpring(
-    useTransform(cardY, [-0.5, 0.5], shouldReduceMotion ? [0, 0] : [6.5, -6.5]),
-    springCfg
-  );
-  const rotateY = useSpring(
-    useTransform(cardX, [-0.5, 0.5], shouldReduceMotion ? [0, 0] : [-6.5, 6.5]),
-    springCfg
-  );
-
-  // Specular sheen highlight opacity tied to tilt
+  const rotateX = useSpring(useTransform(cardY, [-0.5, 0.5], shouldReduceMotion ? [0, 0] : [6.5, -6.5]), springCfg);
+  const rotateY = useSpring(useTransform(cardX, [-0.5, 0.5], shouldReduceMotion ? [0, 0] : [-6.5, 6.5]), springCfg);
   const sheenOpacity = useTransform(cardX, [-0.5, 0, 0.5], [0.26, 0.12, 0.26]);
 
   const handleMouseMoveCard = (e: React.MouseEvent<HTMLDivElement>) => {
     if (isDragging || shouldReduceMotion) return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-    cardX.set(x);
-    cardY.set(y);
+    const r = e.currentTarget.getBoundingClientRect();
+    cardX.set((e.clientX - r.left) / r.width - 0.5);
+    cardY.set((e.clientY - r.top) / r.height - 0.5);
   };
 
   const handleMouseLeaveCard = () => {
@@ -197,45 +149,25 @@ export default function CardDeckSection({
     cardY.set(0);
   };
 
-  // Reset timer whenever tab or card index changes
+  // Timer reset & cleanup
   useEffect(() => {
     if (timerIntervalRef.current) clearInterval(timerIntervalRef.current);
-    const newDur = parseDurationSeconds(currentCard.duration);
-    setTimeLeft(newDur);
+    setTimeLeft(parseDurationSeconds(currentCard.duration));
     setTimerActive(false);
   }, [activeDeckTab, cardIndexWithinTab, currentCard.duration]);
 
-  // Gentle audio finish chime using Web Audio API
-  const playTimerFinishSound = () => {
-    try {
-      const AudioCtx =
-        window.AudioContext ||
-        (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-      if (!AudioCtx) return;
-      const ctx = new AudioCtx();
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = 'triangle';
-      osc.frequency.setValueAtTime(523.25, ctx.currentTime);
-      osc.frequency.setValueAtTime(659.25, ctx.currentTime + 0.12);
-      osc.frequency.setValueAtTime(783.99, ctx.currentTime + 0.24);
-      gain.gain.setValueAtTime(0.08, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.6);
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start();
-      osc.stop(ctx.currentTime + 0.65);
-    } catch { }
-  };
+  useEffect(() => {
+    return () => {
+      if (timerIntervalRef.current) clearInterval(timerIntervalRef.current);
+    };
+  }, []);
 
   const handleToggleTimer = () => {
     if (timerActive) {
       if (timerIntervalRef.current) clearInterval(timerIntervalRef.current);
       setTimerActive(false);
     } else {
-      if (timeLeft <= 0) {
-        setTimeLeft(initialDuration);
-      }
+      if (timeLeft <= 0) setTimeLeft(initialDuration);
       setTimerActive(true);
       timerIntervalRef.current = setInterval(() => {
         setTimeLeft((prev) => {
@@ -257,89 +189,27 @@ export default function CardDeckSection({
     return `${m > 0 ? `${m}m ` : ''}${s < 10 && m > 0 ? `0${s}` : s}s`;
   };
 
-  const totalCards = currentDeck.cards.length;
-
-  // Trigger shuffle with authentic card deal pop animation
   const handleTriggerShuffle = () => {
     setIsShuffling(true);
     onShuffleCard();
     setTimeout(() => setIsShuffling(false), 460);
   };
 
-  // Responsive screen width for accurate stacked card fanning
-  const [windowWidth, setWindowWidth] = useState<number>(1200);
-  useEffect(() => {
-    const updateWidth = () => setWindowWidth(window.innerWidth);
-    updateWidth();
-    window.addEventListener('resize', updateWidth);
-    return () => window.removeEventListener('resize', updateWidth);
-  }, []);
-
-  // Compute balanced circular slot (-2, -1, 0, 1, 2)
-  const getSlot = (i: number, active: number): number => {
-    if (i === active) return 0;
-    if (active === 0) {
-      if (i === 1) return 1;
-      if (i === 2) return 2;
-      if (i === 3) return -1;
-    }
-    if (active === 1) {
-      if (i === 0) return -1;
-      if (i === 2) return 1;
-      if (i === 3) return 2;
-    }
-    if (active === 2) {
-      if (i === 0) return -2;
-      if (i === 1) return -1;
-      if (i === 3) return 1;
-    }
-    if (active === 3) {
-      if (i === 0) return 1;
-      if (i === 1) return -2;
-      if (i === 2) return -1;
-    }
-    return 0;
-  };
-
-  // Stack transform configuration per slot
-  const getStackTransform = (slot: number, width: number) => {
+  // Stack transform generator
+  const getStackTransform = (slot: number) => {
     if (slot === 0) {
-      return {
-        x: 0,
-        y: 0,
-        rotate: 0,
-        scale: 1,
-        zIndex: 30,
-        opacity: 1,
-        filter: 'brightness(1)',
-      };
+      return { x: 0, y: 0, rotate: 0, scale: 1, zIndex: 30, opacity: 1, filter: 'brightness(1)' };
     }
-
-    const isMobile = width < 600;
-    const isSmallTablet = width >= 600 && width < 768;
-    const isTablet = width >= 768 && width < 1024;
-
-    const stepX = isMobile ? 24 : isSmallTablet ? 55 : isTablet ? 95 : 165;
-    const stepY = isMobile ? 6 : isSmallTablet ? 8 : isTablet ? 10 : 13;
-    const stepRot = isMobile ? 2.5 : isSmallTablet ? 3.5 : isTablet ? 4.2 : 5.4;
+    const { stepX, stepY, stepRot, scaleDelta, opDelta } = BREAKPOINT_STEPS[bpIdx];
     const absSlot = Math.abs(slot);
-
-    const x = slot * stepX;
-    const y = absSlot * stepY;
-    const rotate = slot * stepRot;
-    const scale = 1 - absSlot * (isMobile ? 0.04 : 0.055);
-    const zIndex = 25 - absSlot * 6;
-    const opacity = 1 - absSlot * (isMobile ? 0.12 : 0.08);
-    const brightness = 1 - absSlot * 0.14;
-
     return {
-      x,
-      y,
-      rotate,
-      scale,
-      zIndex,
-      opacity,
-      filter: `brightness(${brightness})`,
+      x: slot * stepX,
+      y: absSlot * stepY,
+      rotate: slot * stepRot,
+      scale: 1 - absSlot * scaleDelta,
+      zIndex: 25 - absSlot * 6,
+      opacity: 1 - absSlot * opDelta,
+      filter: `brightness(${1 - absSlot * 0.14})`,
     };
   };
 
@@ -391,10 +261,6 @@ export default function CardDeckSection({
             role="tablist"
             aria-label="Kategori Kartu Tantangan"
             ref={tabsContainerRef}
-            onMouseDown={handleTabsMouseDown}
-            onMouseMove={handleTabsMouseMove}
-            onMouseUp={handleTabsMouseUp}
-            onMouseLeave={handleTabsMouseUp}
           >
             {challengeDecks.map((deck, idx) => {
               const isActive = activeDeckTab === idx;
@@ -430,22 +296,16 @@ export default function CardDeckSection({
         <div className="card-showcase-wrapper">
           <motion.div
             className="deck-card-ambient-aura"
-            animate={{
-              background: currentMeta.auraColor,
-            }}
+            animate={{ background: currentAura }}
             transition={{ duration: 0.6, ease: 'easeOut' }}
           />
 
-          <div
-            className="card-deck-stack-stage"
-            onTouchStart={handleStageTouchStart}
-            onTouchEnd={handleStageTouchEnd}
-          >
+          <div className="card-deck-stack-stage">
             {challengeDecks.map((deck, idx) => {
               const isActive = idx === activeDeckTab;
-              const slot = getSlot(idx, activeDeckTab);
+              const slot = STACK_SLOTS[activeDeckTab]?.[idx] ?? 0;
               const card = isActive ? currentCard : deck.cards[0] || currentCard;
-              const transform = getStackTransform(slot, windowWidth);
+              const transform = getStackTransform(slot);
               const isDeckHasTimer =
                 deck.hasTimer ?? (deck.category === 'Reward' || deck.category === 'Punishment');
               const cardHasTimer = Boolean(isActive && isDeckHasTimer && currentCard.duration);
@@ -457,19 +317,10 @@ export default function CardDeckSection({
                   drag={isActive ? 'x' : false}
                   dragConstraints={{ left: 0, right: 0 }}
                   dragElastic={0.28}
-                  dragTransition={{
-                    bounceStiffness: 580,
-                    bounceDamping: 26,
-                    power: 0.15,
-                  }}
-                  whileDrag={{
-                    scale: 1.035,
-                    cursor: 'grabbing',
-                  }}
+                  dragTransition={{ bounceStiffness: 580, bounceDamping: 26, power: 0.15 }}
+                  whileDrag={{ scale: 1.035, cursor: 'grabbing' }}
                   onDragStart={() => setIsDragging(true)}
-                  onDrag={(_e, info) => {
-                    dragX.set(info.offset.x);
-                  }}
+                  onDrag={(_e, info) => dragX.set(info.offset.x)}
                   onDragEnd={(_e, info) => {
                     setIsDragging(false);
                     animate(dragX, 0, { type: 'spring', stiffness: 580, damping: 28 });
@@ -499,12 +350,7 @@ export default function CardDeckSection({
                         filter: transform.filter,
                       }
                   }
-                  transition={{
-                    type: 'spring',
-                    stiffness: 300,
-                    damping: 27,
-                    mass: 0.85,
-                  }}
+                  transition={{ type: 'spring', stiffness: 300, damping: 27, mass: 0.85 }}
                   whileHover={
                     !isActive
                       ? {
@@ -547,7 +393,8 @@ export default function CardDeckSection({
                       className="game-card-bg-img"
                       width={935}
                       height={1024}
-                      loading="eager"
+                      loading={isActive ? 'eager' : 'lazy'}
+                      decoding="async"
                     />
 
                     <motion.div
@@ -745,7 +592,7 @@ export default function CardDeckSection({
                   exit={{ opacity: 0, y: -4 }}
                   transition={{ duration: 0.18 }}
                 >
-                  Kartu {cardIndexWithinTab + 1} dari {totalCards} • Kategori {currentDeck.title}
+                  Kartu {cardIndexWithinTab + 1} dari {challengeDecks[activeDeckTab]?.cards?.length || 3} • Kategori {currentDeck.title}
                 </motion.span>
               </AnimatePresence>
             </div>
