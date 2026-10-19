@@ -3,38 +3,127 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { painPoints } from '../../data/gameData';
 
+const CARD_THEMES = ['card-theme-rose', 'card-theme-gold', 'card-theme-purple'];
+const CARD_TAGS = [
+  '✦ Masalah #01 • Beda Ritme',
+  '♥ Masalah #02 • Canggung',
+  '★ Masalah #03 • Rutinitas Monoton',
+];
+const PROGRESS_TARGETS = [0.06, 0.48, 0.88];
+
+// Direct DOM transform updates: 0 React re-renders during scroll
+function applyCardTransforms(cards: (HTMLDivElement | null)[], p: number) {
+  const c0 = cards[0];
+  if (c0) {
+    if (p < 0.18) {
+      c0.style.transform = 'translate3d(-10px, 0px, 0) rotate(-2.8deg)';
+      c0.style.opacity = '1';
+      c0.style.zIndex = '3';
+      c0.style.pointerEvents = 'auto';
+    } else if (p <= 0.38) {
+      const exit = (p - 0.18) / 0.2;
+      c0.style.transform = `translate3d(${-10 - exit * 45}%, ${-exit * 135}%, 0) rotate(${-2.8 - exit * 15}deg)`;
+      c0.style.opacity = `${exit > 0.75 ? Math.max((1 - exit) / 0.25, 0) : 1}`;
+      c0.style.zIndex = '3';
+      c0.style.pointerEvents = exit > 0.5 ? 'none' : 'auto';
+    } else {
+      c0.style.transform = 'translate3d(-55%, -135%, 0) rotate(-18deg)';
+      c0.style.opacity = '0';
+      c0.style.zIndex = '1';
+      c0.style.pointerEvents = 'none';
+    }
+  }
+
+  const c1 = cards[1];
+  if (c1) {
+    if (p < 0.18) {
+      c1.style.transform = 'translate3d(24px, 14px, 0) rotate(5.8deg) scale(0.98)';
+      c1.style.opacity = '1';
+      c1.style.zIndex = '2';
+      c1.style.pointerEvents = 'none';
+    } else if (p < 0.38) {
+      const enter = (p - 0.18) / 0.2;
+      c1.style.transform = `translate3d(${24 - 18 * enter}px, ${14 * (1 - enter)}px, 0) rotate(${5.8 - 4 * enter}deg) scale(${0.98 + 0.02 * enter})`;
+      c1.style.opacity = '1';
+      c1.style.zIndex = '2';
+      c1.style.pointerEvents = enter > 0.8 ? 'auto' : 'none';
+    } else if (p <= 0.55) {
+      c1.style.transform = 'translate3d(6px, 0px, 0) rotate(1.8deg) scale(1)';
+      c1.style.opacity = '1';
+      c1.style.zIndex = '3';
+      c1.style.pointerEvents = 'auto';
+    } else if (p <= 0.75) {
+      const exit = (p - 0.55) / 0.2;
+      c1.style.transform = `translate3d(${6 + exit * 45}%, ${-exit * 135}%, 0) rotate(${1.8 + exit * 16}deg)`;
+      c1.style.opacity = `${exit > 0.75 ? Math.max((1 - exit) / 0.25, 0) : 1}`;
+      c1.style.zIndex = '3';
+      c1.style.pointerEvents = exit > 0.5 ? 'none' : 'auto';
+    } else {
+      c1.style.transform = 'translate3d(55%, -135%, 0) rotate(18deg)';
+      c1.style.opacity = '0';
+      c1.style.zIndex = '1';
+      c1.style.pointerEvents = 'none';
+    }
+  }
+
+  const c2 = cards[2];
+  if (c2) {
+    if (p < 0.18) {
+      c2.style.transform = 'translate3d(-24px, 28px, 0) rotate(-6.8deg) scale(0.96)';
+      c2.style.opacity = '1';
+      c2.style.zIndex = '1';
+      c2.style.pointerEvents = 'none';
+    } else if (p < 0.38) {
+      const s1 = (p - 0.18) / 0.2;
+      c2.style.transform = `translate3d(${-24 + 10 * s1}px, ${28 - 14 * s1}px, 0) rotate(${-6.8 + 2.5 * s1}deg) scale(${0.96 + 0.02 * s1})`;
+      c2.style.opacity = '1';
+      c2.style.zIndex = '1';
+      c2.style.pointerEvents = 'none';
+    } else if (p < 0.55) {
+      c2.style.transform = 'translate3d(-14px, 14px, 0) rotate(-4.3deg) scale(0.98)';
+      c2.style.opacity = '1';
+      c2.style.zIndex = '2';
+      c2.style.pointerEvents = 'none';
+    } else if (p < 0.75) {
+      const enter = (p - 0.55) / 0.2;
+      c2.style.transform = `translate3d(${-14 * (1 - enter)}px, ${14 * (1 - enter)}px, 0) rotate(${-4.3 + 3.5 * enter}deg) scale(${0.98 + 0.02 * enter})`;
+      c2.style.opacity = '1';
+      c2.style.zIndex = '2';
+      c2.style.pointerEvents = enter > 0.8 ? 'auto' : 'none';
+    } else {
+      c2.style.transform = 'translate3d(0, 0px, 0) rotate(-0.8deg) scale(1)';
+      c2.style.opacity = '1';
+      c2.style.zIndex = '3';
+      c2.style.pointerEvents = 'auto';
+    }
+  }
+}
+
 export default function InsightSection() {
   const containerRef = useRef<HTMLElement>(null);
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
   const [activeCardIndex, setActiveCardIndex] = useState(0);
 
   useEffect(() => {
-    let animationFrameId: number;
+    let rafId: number;
 
     const handleScroll = () => {
-      if (!containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
+      const el = containerRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
       const totalScrollable = rect.height - window.innerHeight;
-
       if (totalScrollable <= 0) return;
 
-      const currentScroll = -rect.top;
-      const progress = Math.min(Math.max(currentScroll / totalScrollable, 0), 1);
+      const progress = Math.min(Math.max(-rect.top / totalScrollable, 0), 1);
+      applyCardTransforms(cardsRef.current, progress);
 
-      setScrollProgress(progress);
-
-      if (progress < 0.35) {
-        setActiveCardIndex(0);
-      } else if (progress < 0.70) {
-        setActiveCardIndex(1);
-      } else {
-        setActiveCardIndex(2);
-      }
+      const nextIdx = progress < 0.35 ? 0 : progress < 0.7 ? 1 : 2;
+      setActiveCardIndex((prev) => (prev !== nextIdx ? nextIdx : prev));
     };
 
     const onScroll = () => {
-      cancelAnimationFrame(animationFrameId);
-      animationFrameId = requestAnimationFrame(handleScroll);
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(handleScroll);
     };
 
     window.addEventListener('scroll', onScroll, { passive: true });
@@ -42,163 +131,20 @@ export default function InsightSection() {
     handleScroll();
 
     return () => {
-      cancelAnimationFrame(animationFrameId);
+      cancelAnimationFrame(rafId);
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onScroll);
     };
   }, []);
 
   const scrollToCard = (index: number) => {
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
+    const el = containerRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
     const containerTop = window.scrollY + rect.top;
-    const totalScrollable = containerRef.current.offsetHeight - window.innerHeight;
-    const progressTargets = [0.06, 0.48, 0.88];
-    const targetY = containerTop + totalScrollable * progressTargets[index];
+    const totalScrollable = el.offsetHeight - window.innerHeight;
+    const targetY = containerTop + totalScrollable * PROGRESS_TARGETS[index];
     window.scrollTo({ top: targetY, behavior: 'smooth' });
-  };
-
-  const cardThemes = ['card-theme-rose', 'card-theme-gold', 'card-theme-purple'];
-  const cardTags = [
-    '✦ Masalah #01 • Beda Ritme',
-    '♥ Masalah #02 • Canggung',
-    '★ Masalah #03 • Rutinitas Monoton'
-  ];
-
-  const getCardStyle = (index: number): React.CSSProperties => {
-    if (index === 0) {
-      if (scrollProgress < 0.18) {
-        return {
-          transform: 'translate3d(-10px, 0px, 0) rotate(-2.8deg) scale(1)',
-          opacity: 1,
-          zIndex: 3,
-          pointerEvents: 'auto',
-        };
-      }
-      if (scrollProgress <= 0.38) {
-        const exit = (scrollProgress - 0.18) / 0.20;
-        const translateY = -exit * 135;
-        const translateX = -10 - exit * 45;
-        const rotate = -2.8 - exit * 15;
-        const opacity = exit > 0.75 ? Math.max((1 - exit) / 0.25, 0) : 1;
-        return {
-          transform: `translate3d(${translateX}%, ${translateY}%, 0) rotate(${rotate}deg) scale(1)`,
-          opacity,
-          zIndex: 3,
-          pointerEvents: exit > 0.5 ? 'none' : 'auto',
-        };
-      }
-      return {
-        transform: 'translate3d(-55%, -135%, 0) rotate(-18deg) scale(1)',
-        opacity: 0,
-        zIndex: 1,
-        pointerEvents: 'none',
-      };
-    }
-
-    if (index === 1) {
-      if (scrollProgress < 0.18) {
-        return {
-          transform: 'translate3d(24px, 14px, 0) rotate(5.8deg) scale(0.98)',
-          opacity: 1,
-          zIndex: 2,
-          pointerEvents: 'none',
-        };
-      }
-      if (scrollProgress < 0.38) {
-        const enter = (scrollProgress - 0.18) / 0.20;
-        const translateX = 24 * (1 - enter) + 6 * enter;
-        const translateY = 14 * (1 - enter);
-        const rotate = 5.8 * (1 - enter) + 1.8 * enter;
-        const scale = 0.98 + 0.02 * enter;
-        return {
-          transform: `translate3d(${translateX}px, ${translateY}px, 0) rotate(${rotate}deg) scale(${scale})`,
-          opacity: 1,
-          zIndex: 2,
-          pointerEvents: enter > 0.8 ? 'auto' : 'none',
-        };
-      }
-      if (scrollProgress <= 0.55) {
-        return {
-          transform: 'translate3d(6px, 0px, 0) rotate(1.8deg) scale(1)',
-          opacity: 1,
-          zIndex: 3,
-          pointerEvents: 'auto',
-        };
-      }
-      if (scrollProgress <= 0.75) {
-        const exit = (scrollProgress - 0.55) / 0.20;
-        const translateY = -exit * 135;
-        const translateX = 6 + exit * 45;
-        const rotate = 1.8 + exit * 16;
-        const opacity = exit > 0.75 ? Math.max((1 - exit) / 0.25, 0) : 1;
-        return {
-          transform: `translate3d(${translateX}%, ${translateY}%, 0) rotate(${rotate}deg) scale(1)`,
-          opacity,
-          zIndex: 3,
-          pointerEvents: exit > 0.5 ? 'none' : 'auto',
-        };
-      }
-      return {
-        transform: 'translate3d(55%, -135%, 0) rotate(18deg) scale(1)',
-        opacity: 0,
-        zIndex: 1,
-        pointerEvents: 'none',
-      };
-    }
-
-    if (index === 2) {
-      if (scrollProgress < 0.18) {
-        return {
-          transform: 'translate3d(-24px, 28px, 0) rotate(-6.8deg) scale(0.96)',
-          opacity: 1,
-          zIndex: 1,
-          pointerEvents: 'none',
-        };
-      }
-      if (scrollProgress < 0.38) {
-        const step1 = (scrollProgress - 0.18) / 0.20;
-        const translateX = -24 + 10 * step1;
-        const translateY = 28 - 14 * step1;
-        const rotate = -6.8 + 2.5 * step1;
-        const scale = 0.96 + 0.02 * step1;
-        return {
-          transform: `translate3d(${translateX}px, ${translateY}px, 0) rotate(${rotate}deg) scale(${scale})`,
-          opacity: 1,
-          zIndex: 1,
-          pointerEvents: 'none',
-        };
-      }
-      if (scrollProgress < 0.55) {
-        return {
-          transform: 'translate3d(-14px, 14px, 0) rotate(-4.3deg) scale(0.98)',
-          opacity: 1,
-          zIndex: 2,
-          pointerEvents: 'none',
-        };
-      }
-      if (scrollProgress < 0.75) {
-        const enter = (scrollProgress - 0.55) / 0.20;
-        const translateX = -14 * (1 - enter);
-        const translateY = 14 * (1 - enter);
-        const rotate = -4.3 * (1 - enter) - 0.8 * enter;
-        const scale = 0.98 + 0.02 * enter;
-        return {
-          transform: `translate3d(${translateX}px, ${translateY}px, 0) rotate(${rotate}deg) scale(${scale})`,
-          opacity: 1,
-          zIndex: 2,
-          pointerEvents: enter > 0.8 ? 'auto' : 'none',
-        };
-      }
-      return {
-        transform: 'translate3d(0, 0px, 0) rotate(-0.8deg) scale(1)',
-        opacity: 1,
-        zIndex: 3,
-        pointerEvents: 'auto',
-      };
-    }
-
-    return {};
   };
 
   return (
@@ -218,9 +164,11 @@ export default function InsightSection() {
           <div className="stacked-deck-container" aria-live="polite">
             {painPoints.map((point, index) => (
               <div
-                className={`stacked-card ${cardThemes[index]} ${activeCardIndex === index ? 'is-active' : ''}`}
+                ref={(el) => {
+                  cardsRef.current[index] = el;
+                }}
+                className={`stacked-card ${CARD_THEMES[index]} ${activeCardIndex === index ? 'is-active' : ''}`}
                 key={index}
-                style={getCardStyle(index)}
                 role="article"
                 aria-label={`Kartu realita ke-${index + 1}: ${point.title}`}
               >
@@ -228,7 +176,7 @@ export default function InsightSection() {
                   <div className="stacked-card-header">
                     <div className="stacked-card-badge">
                       <span className="badge-dot" />
-                      <span>{cardTags[index]}</span>
+                      <span>{CARD_TAGS[index]}</span>
                     </div>
 
                     <div className="stacked-card-icon">
