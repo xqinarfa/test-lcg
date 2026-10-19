@@ -13,17 +13,17 @@ export default function FeaturesSection() {
             Semua yang dibutuhkan untuk malam romantis
           </h2>
           <p className="section-subtitle">
-            Dirancang dengan cermat untuk kenyamanan, privasi, dan kepuasan kedua belah pihak.
+            Dirancang dengan cermat untuk kenyamanan, privasi, dan keseruan kedua belah pihak.
           </p>
         </div>
 
         <div className="features-grid">
           {featurePillars.map((feature, idx) => {
             const tags = [
-              '4 Kategori Intim',
-              'Foreplay Tenang',
+              '4 Kategori Kartu',
+              'Tanpa Terburu-buru',
               'Koin & Kostum',
-              'Keamanan Kamar',
+              'Privasi Terjaga',
             ];
 
             return (

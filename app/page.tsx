@@ -143,10 +143,10 @@ export default function Home() {
       'Love Couple Games v1.4.2 - Paket Pasutri Resmi\n' +
       'License Key: LCG-PASUTRI-88K-VIP\n\n' +
       '1. PENGGUNA APPLE iOS (iPhone / iPad):\n' +
-      '   Aplikasi ini resmi tersedia di Apple Store. Buka tautan instan Apple Store / Web App privat Anda untuk langsung bermain layar penuh.\n\n' +
+      '   Aplikasi ini resmi tersedia di App Store. Buka tautan instan App Store / Web App privat Anda untuk langsung bermain layar penuh.\n\n' +
       '2. PENGGUNA ANDROID:\n' +
-      '   Pasang paket installer APK resmi tanpa sensor ini langsung di ponsel Android Anda (aktifkan izin pasang dari sumber ini).\n\n' +
-      'Terima kasih telah bergabung. Selamat menikmati malam penuh gairah & tawa berdua!'
+      '   Pasang paket installer APK resmi ini langsung di ponsel Android Anda (aktifkan izin pasang dari sumber ini).\n\n' +
+      'Terima kasih telah bergabung. Selamat menikmati malam penuh kemesraan & tawa berdua!'
     ], { type: 'text/plain;charset=utf-8' });
     element.href = URL.createObjectURL(file);
     element.download = 'LoveCoupleGames-v1.4.2-Setup.txt';

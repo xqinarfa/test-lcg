@@ -26,7 +26,7 @@ export default function GameplaySection() {
             Satu papan permainan, ratusan momen berdua
           </h2>
           <p className="section-subtitle">
-            Alur permainan yang dirancang bertahap, mulai dari obrolan santai hingga momen intim yang berkesan.
+            Alur permainan yang dirancang bertahap, mulai dari obrolan santai hingga momen mesra yang berkesan.
           </p>
 
           <div className="gameplay-stepper">

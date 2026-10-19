@@ -26,8 +26,27 @@ const rubik = Rubik({
 });
 
 export const metadata: Metadata = {
-  title: "Love Couple Games: Game Papan Digital Pasangan Suami Istri",
-  description: "Hangatkan kembali keintiman pernikahan bersama pasangan. Game papan digital khusus pasutri berisi tantangan mesra, truth or dare, dan kustomisasi karakter.",
+  title: "Love Couple Games | Game Papan Digital untuk Pasutri",
+  description: "Game papan digital untuk pasangan suami istri: ngobrol, tertawa, dan makin dekat berdua. Main pakai satu HP, offline dan privat.",
+  keywords: [
+    "game pasutri",
+    "game pasangan",
+    "permainan suami istri",
+    "couple games",
+    "romantic games"
+  ],
+  openGraph: {
+    title: "Love Couple Games | Game Papan Digital untuk Pasutri",
+    description: "Game papan digital untuk pasangan suami istri: ngobrol, tertawa, dan makin dekat berdua. Main pakai satu HP, offline dan privat.",
+    type: "website",
+    locale: "id_ID",
+    siteName: "Love Couple Games",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Love Couple Games | Game Papan Digital untuk Pasutri",
+    description: "Game papan digital untuk pasangan suami istri: ngobrol, tertawa, dan makin dekat berdua. Main pakai satu HP, offline dan privat.",
+  },
   icons: {
     icon: "/assets/images/logo.svg",
   },

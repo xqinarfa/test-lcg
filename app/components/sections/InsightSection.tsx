@@ -60,8 +60,8 @@ export default function InsightSection() {
 
   const cardThemes = ['card-theme-rose', 'card-theme-gold', 'card-theme-purple'];
   const cardTags = [
-    '✦ Masalah #01 • Belum Siap',
-    '♥ Masalah #02 • Kurang Respon',
+    '✦ Masalah #01 • Beda Ritme',
+    '♥ Masalah #02 • Canggung',
     '★ Masalah #03 • Rutinitas Monoton'
   ];
 
@@ -211,7 +211,7 @@ export default function InsightSection() {
               KAMU NGERASAIN INI GA SIH?
             </h2>
             <p className="section-subtitle mx-auto">
-              Bukan karena rasa cinta berkurang, tapi rutinitas ranjang yang gitu-gitu aja bikin gairah perlahan redup...
+              Bukan karena rasa cinta berkurang, tapi rutinitas yang gitu-gitu aja bikin kemesraan perlahan redup...
             </p>
           </div>
 

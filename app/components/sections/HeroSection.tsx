@@ -97,15 +97,15 @@ export default function HeroSection({ onOpenModal, onScrollToSection }: HeroSect
         >
           <h1 className="hero-headline">
             <span className="hero-eyebrow-question">
-              Pernikahan Kamu Hambar? Bosen Rutinitas di Ranjang Gitu-Gitu Aja?
+              Pernikahan Kamu Hambar? Bosen Rutinitas Gitu-Gitu Aja?
             </span>
             <span className="hero-main-title">
-              Mau Gak Hubungan Intim yang <em>Bikin Nagih?</em>
+              Mau Gak Malam Berdua yang <em>Bikin Nagih?</em>
             </span>
           </h1>
 
           <p className="hero-subtext">
-            Main <strong>LOVE COUPLE GAMES!</strong> Game papan digital khusus pasutri untuk menghidupkan kembali gairah, tawa, dan keintiman panas berdua tanpa rasa canggung.
+            Main <strong>LOVE COUPLE GAMES!</strong> Game papan digital khusus pasutri untuk menghidupkan kembali kemesraan, tawa, dan kedekatan berdua tanpa rasa canggung.
           </p>
 
           <div className="price-block">

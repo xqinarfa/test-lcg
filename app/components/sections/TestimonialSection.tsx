@@ -123,7 +123,7 @@ export default function TestimonialSection({ onOpenModal: _onOpenModal }: Testim
             className="section-subtitle mx-auto"
             variants={headerItemVariants}
           >
-            Cerita jujur dari pasangan suami istri yang hubungannya kembali mesra, hangat, dan bergairah berkat Love Couple Games.
+            Cerita jujur dari pasangan suami istri yang hubungannya kembali mesra, hangat, dan seru berkat Love Couple Games.
           </motion.p>
 
           <motion.div 
@@ -141,7 +141,7 @@ export default function TestimonialSection({ onOpenModal: _onOpenModal }: Testim
             </div>
             <span className="trust-rating">4.9 / 5.0 Rating</span>
             <span className="trust-sep" aria-hidden="true">•</span>
-            <span className="trust-privacy">100% Privat Kamar Tidur</span>
+            <span className="trust-privacy">100% Privat</span>
           </motion.div>
         </motion.div>
       </div>

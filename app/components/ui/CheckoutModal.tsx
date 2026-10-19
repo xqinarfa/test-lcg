@@ -272,17 +272,17 @@ export default function CheckoutModal({
                     </svg>
                     <span>Apple iOS (iPhone / iPad)</span>
                   </div>
-                  <span className="modal-platform-badge-store">✓ Tersedia di Apple Store</span>
+                  <span className="modal-platform-badge-store">✓ Tersedia di App Store</span>
                 </div>
                 <p className="modal-platform-desc">
-                  Game ini resmi tersedia di Apple Store &amp; Web App privat tanpa sensor.
+                  Game ini resmi tersedia di App Store &amp; Web App privat.
                 </p>
                 <button
                   type="button"
                   onClick={onDownloadApk}
                   className="modal-platform-btn-ios"
                 >
-                  Buka di Apple Store (iOS)
+                  Buka di App Store (iOS)
                 </button>
               </div>
 
@@ -295,15 +295,15 @@ export default function CheckoutModal({
                     <span>Android (Semua Tipe HP)</span>
                   </div>
                   <span className="modal-platform-badge-store">
-                    ✓ APK Resmi Tanpa Sensor
+                    ✓ APK Resmi Android
                   </span>
                 </div>
                 <p className="modal-platform-desc">
-                  Paket installer APK resmi langsung untuk semua HP Android. 100% aman, privat, bebas sensor, dan siap dipasang:
+                  Paket installer APK resmi langsung untuk semua HP Android. 100% aman, privat, dan siap dipasang:
                 </p>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '4px 0 10px' }}>
                   <span style={{ fontSize: '0.72rem', color: 'var(--accent-gold-light)', background: 'rgba(230, 185, 128, 0.12)', padding: '2px 8px', borderRadius: '4px', border: '1px solid rgba(230, 185, 128, 0.25)' }}>
-                    v1.4.2 Uncensored
+                    v1.4.2 Resmi
                   </span>
                   <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>
                     • 14.8 MB Siap Pasang
@@ -314,7 +314,7 @@ export default function CheckoutModal({
                   id="btnModalDownloadApk"
                   style={{ width: '100%', fontSize: '0.98rem' }}
                 >
-                  DOWNLOAD APK ANDROID (Tanpa Sensor)
+                  DOWNLOAD APK ANDROID
                 </Button>
               </div>
             </div>

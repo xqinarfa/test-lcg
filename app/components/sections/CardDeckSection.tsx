@@ -21,14 +21,14 @@ const categoryMetadata: Record<
   }
 > = {
   Reward: {
-    tagline: 'Hadiah intim dan apresiasi sentuhan manis untuk memanjakan pasangan setelah berhasil menyelesaikan misi.',
+    tagline: 'Hadiah manis dan apresiasi sentuhan hangat untuk memanjakan pasangan setelah berhasil menyelesaikan misi.',
     auraColor: 'radial-gradient(circle, rgba(234, 179, 8, 0.32) 0%, rgba(202, 138, 4, 0.12) 50%, transparent 70%)',
-    tierLabels: ['Pemanasan Manis', 'Sentuhan Sensual', 'Kenikmatan Intim'],
+    tierLabels: ['Pemanasan Manis', 'Sentuhan Lembut', 'Kedekatan Hangat'],
   },
   Punishment: {
-    tagline: 'Hukuman ranjang sensual dan nakal yang menggoda—membuat suasana semakin hangat dan bikin nagih.',
+    tagline: 'Hukuman manis dan seru yang menyenangkan—membuat suasana semakin hangat dan bikin nagih.',
     auraColor: 'radial-gradient(circle, rgba(239, 68, 68, 0.32) 0%, rgba(220, 38, 38, 0.14) 50%, transparent 70%)',
-    tierLabels: ['Tantangan Lembut', 'Godaan Nakal', 'Aksi Tanpa Sensor'],
+    tierLabels: ['Tantangan Lembut', 'Godaan Seru', 'Aksi Berdua'],
   },
   Truth: {
     tagline: 'Membongkar rahasia romantis, kenangan nostalgia masa pacaran, dan isi hati terdalam tanpa rasa canggung.',
@@ -38,7 +38,7 @@ const categoryMetadata: Record<
   Dare: {
     tagline: 'Aksi berani yang memecah kekakuan suasana dan langsung menyulut percikan chemistry berdua.',
     auraColor: 'radial-gradient(circle, rgba(249, 115, 22, 0.32) 0%, rgba(234, 88, 12, 0.14) 50%, transparent 70%)',
-    tierLabels: ['Bisikan Menggoda', 'Ciuman Spontan', 'Pose Panas Privat'],
+    tierLabels: ['Bisikan Menggoda', 'Ciuman Spontan', 'Pose Ceria Berdua'],
   },
 };
 
@@ -264,7 +264,7 @@ export default function CardDeckSection({
             Contoh Kartu Tantangan yang Akan Kalian Mainkan
           </h2>
           <p className="section-subtitle">
-            Tersedia 4 kategori kartu unik untuk membangun koneksi mendalam, memicu tawa hangat, hingga menghidupkan gairah ranjang berdua.
+            Tersedia 4 kategori kartu unik untuk membangun koneksi mendalam, memicu tawa hangat, hingga menghidupkan kemesraan berdua.
           </p>
         </div>
 
