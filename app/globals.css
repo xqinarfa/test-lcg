@@ -460,6 +460,8 @@ img {
    HERO SECTION (FIGMA ORGANIC WAVES INTEGRATION)
    ========================================================================== */
 .hero-section {
+  --mx: 0;
+  --my: 0;
   padding: 120px 0 145px;
   position: relative;
   overflow: hidden;
@@ -474,6 +476,8 @@ img {
   pointer-events: none;
   z-index: 1;
   overflow: hidden;
+  transform: translate3d(calc(var(--mx) * 20px), 0, 0);
+  will-change: transform;
 }
 
 .hero-figma-wave-layer {
@@ -683,6 +687,7 @@ img {
   display: flex;
   justify-content: center;
   position: relative;
+  perspective: 1200px;
 }
 
 .phone-mockup {
@@ -699,11 +704,9 @@ img {
     0 0 32px rgba(230, 185, 128, 0.12);
   position: relative;
   overflow: hidden;
-  transition: transform var(--transition-normal);
-}
-
-.phone-mockup:hover {
-  transform: translateY(-4px);
+  transform: rotateX(calc(var(--my) * -12deg)) rotateY(calc(var(--mx) * 14deg));
+  transition: transform 0.1s ease-out;
+  will-change: transform;
 }
 
 .phone-notch {
@@ -725,7 +728,16 @@ img {
   pointer-events: none;
   z-index: 12;
   border-radius: inherit;
+  transform: translate3d(calc(var(--mx) * -30px), calc(var(--my) * -30px), 0);
   transition: opacity var(--transition-fast);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-figma-bg,
+  .phone-mockup,
+  .phone-glare {
+    transform: none !important;
+  }
 }
 
 .phone-screen {
@@ -2103,6 +2115,13 @@ img {
   flex-direction: column;
   gap: 8px;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.rule-card-inner-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
 }
 
 .rule-card-header {

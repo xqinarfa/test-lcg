@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import Button from '../ui/Button';
 import FigmaWaveDivider from '../ui/FigmaWaveDivider';
 
@@ -10,61 +10,23 @@ export interface HeroSectionProps {
 }
 
 export default function HeroSection({ onOpenModal, onScrollToSection }: HeroSectionProps) {
-  const [scrollY, setScrollY] = useState<number>(0);
-  const [mousePos, setMousePos] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState<boolean>(() => {
-    if (typeof window !== 'undefined') {
-      return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    }
-    return false;
-  });
   const heroRef = useRef<HTMLElement | null>(null);
 
-  useEffect(() => {
-    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const handleMotionChange = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches);
-    motionQuery.addEventListener('change', handleMotionChange);
-
-    let rafId: number | null = null;
-    const handleScroll = () => {
-      if (rafId) return;
-      rafId = window.requestAnimationFrame(() => {
-        const currentY = window.scrollY;
-        if (currentY <= 1000) {
-          setScrollY(currentY);
-        }
-        rafId = null;
-      });
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      motionQuery.removeEventListener('change', handleMotionChange);
-      if (rafId) window.cancelAnimationFrame(rafId);
-    };
-  }, []);
-
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
-    if (prefersReducedMotion || !heroRef.current) return;
-    const rect = heroRef.current.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-    setMousePos({ x, y });
+    const el = heroRef.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    el.style.setProperty('--mx', `${(e.clientX - r.left) / r.width - 0.5}`);
+    el.style.setProperty('--my', `${(e.clientY - r.top) / r.height - 0.5}`);
   };
 
   const handleMouseLeave = () => {
-    setMousePos({ x: 0, y: 0 });
+    const el = heroRef.current;
+    if (el) {
+      el.style.setProperty('--mx', '0');
+      el.style.setProperty('--my', '0');
+    }
   };
-
-  // Parallax offsets (disabled if prefersReducedMotion)
-  const bgOffsetY = prefersReducedMotion ? 0 : scrollY * 0.35;
-  const bgOffsetX = prefersReducedMotion ? 0 : mousePos.x * 20;
-  const phoneScrollOffsetY = prefersReducedMotion ? 0 : scrollY * 0.16;
-  const phoneTiltX = prefersReducedMotion ? 0 : -mousePos.y * 12;
-  const phoneTiltY = prefersReducedMotion ? 0 : mousePos.x * 14;
-  const copyScrollOffsetY = prefersReducedMotion ? 0 : scrollY * 0.08;
-  const copyOpacity = prefersReducedMotion ? 1 : Math.max(0.15, 1 - scrollY / 750);
 
   return (
     <section 
@@ -74,27 +36,13 @@ export default function HeroSection({ onOpenModal, onScrollToSection }: HeroSect
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
-      <div 
-        className="hero-figma-bg" 
-        aria-hidden="true"
-        style={{
-          transform: `translate3d(${bgOffsetX}px, ${bgOffsetY}px, 0)`,
-          willChange: 'transform',
-        }}
-      >
+      <div className="hero-figma-bg" aria-hidden="true">
         <div className="hero-figma-wave-layer" />
         <div className="hero-ambient-glow" />
       </div>
 
       <div className="container hero-grid">
-        <div 
-          className="hero-copy"
-          style={{
-            transform: `translate3d(0, ${copyScrollOffsetY}px, 0)`,
-            opacity: copyOpacity,
-            willChange: 'transform, opacity',
-          }}
-        >
+        <div className="hero-copy">
           <h1 className="hero-headline">
             <span className="hero-eyebrow-question">
               Pernikahan Kamu Hambar? Bosen Rutinitas Gitu-Gitu Aja?
@@ -152,38 +100,21 @@ export default function HeroSection({ onOpenModal, onScrollToSection }: HeroSect
           </div>
         </div>
 
-        <div 
-          className="phone-mockup-wrapper"
-          style={{
-            transform: `translate3d(0, ${phoneScrollOffsetY}px, 0)`,
-            perspective: '1200px',
-            willChange: 'transform',
-          }}
-        >
+        <div className="phone-mockup-wrapper">
           <div className="hero-phone-aura" aria-hidden="true" />
 
-          <div 
-            className="phone-mockup"
-            style={{
-              transform: `rotateX(${phoneTiltX}deg) rotateY(${phoneTiltY}deg)`,
-              transition: mousePos.x === 0 && mousePos.y === 0 ? 'transform 0.6s ease-out' : 'transform 0.08s ease-out',
-            }}
-          >
+          <div className="phone-mockup">
             <div className="phone-notch"></div>
-            <div 
-              className="phone-glare" 
-              aria-hidden="true" 
-              style={{
-                opacity: mousePos.x !== 0 || mousePos.y !== 0 ? 0.35 : 0.15,
-                transform: `translate3d(${-mousePos.x * 30}px, ${-mousePos.y * 30}px, 0)`,
-              }} 
-            />
+            <div className="phone-glare" aria-hidden="true" />
             <div className="phone-screen">
               <img 
                 src="/assets/images/hero-phone-app.jpg" 
                 alt="Tampilan Antarmuka Game Papan Love Couple Games" 
                 width={340}
                 height={698}
+                loading="eager"
+                fetchPriority="high"
+                decoding="async"
               />
             </div>
           </div>
