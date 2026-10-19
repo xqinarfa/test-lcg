@@ -70,7 +70,84 @@ export default function CardDeckSection({
   const [timeLeft, setTimeLeft] = useState<number>(initialDuration);
   const [timerActive, setTimerActive] = useState<boolean>(false);
   const [isShuffling, setIsShuffling] = useState<boolean>(false);
+  const [isDragging, setIsDragging] = useState<boolean>(false);
   const timerIntervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Tabs drag-scroll and auto-scroll refs
+  const tabsContainerRef = useRef<HTMLDivElement | null>(null);
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const isTabsPointerDown = useRef<boolean>(false);
+  const tabsStartX = useRef<number>(0);
+  const tabsScrollLeft = useRef<number>(0);
+
+  // Mobile stage touch gesture refs
+  const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
+
+  const totalDecks = challengeDecks.length;
+
+  const handleNextTab = () => {
+    const nextIdx = (activeDeckTab + 1) % totalDecks;
+    onSelectTab(nextIdx);
+  };
+
+  const handlePrevTab = () => {
+    const prevIdx = (activeDeckTab - 1 + totalDecks) % totalDecks;
+    onSelectTab(prevIdx);
+  };
+
+  // Tabs mouse drag scroll
+  const handleTabsMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!tabsContainerRef.current) return;
+    isTabsPointerDown.current = true;
+    tabsStartX.current = e.pageX - tabsContainerRef.current.offsetLeft;
+    tabsScrollLeft.current = tabsContainerRef.current.scrollLeft;
+  };
+
+  const handleTabsMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isTabsPointerDown.current || !tabsContainerRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - tabsContainerRef.current.offsetLeft;
+    const walk = (x - tabsStartX.current) * 1.5;
+    tabsContainerRef.current.scrollLeft = tabsScrollLeft.current - walk;
+  };
+
+  const handleTabsMouseUp = () => {
+    isTabsPointerDown.current = false;
+  };
+
+  // Stage touch swipe fallback for all mobile browsers
+  const handleStageTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+  };
+
+  const handleStageTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null || touchStartY.current === null) return;
+    const diffX = e.changedTouches[0].clientX - touchStartX.current;
+    const diffY = e.changedTouches[0].clientY - touchStartY.current;
+    if (Math.abs(diffX) > 35 && Math.abs(diffX) > Math.abs(diffY) * 1.1) {
+      if (diffX < 0) {
+        handleNextTab();
+      } else {
+        handlePrevTab();
+      }
+    }
+    touchStartX.current = null;
+    touchStartY.current = null;
+  };
+
+  // Smoothly scroll active tab into view when activeDeckTab changes
+  useEffect(() => {
+    const tabEl = tabRefs.current[activeDeckTab];
+    if (tabEl && tabsContainerRef.current) {
+      tabEl.scrollIntoView({
+        behavior: 'smooth',
+        inline: 'center',
+        block: 'nearest',
+      });
+    }
+  }, [activeDeckTab]);
 
   // 3D Card Hover Motion Values
   const cardX = useMotionValue(0);
@@ -80,6 +157,7 @@ export default function CardDeckSection({
   const rotateY = useSpring(useTransform(cardX, [-0.5, 0.5], [-6.5, 6.5]), springCfg);
 
   const handleMouseMoveCard = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (isDragging) return;
     const rect = e.currentTarget.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width - 0.5;
     const y = (e.clientY - rect.top) / rect.height - 0.5;
@@ -268,32 +346,44 @@ export default function CardDeckSection({
           </p>
         </div>
 
-        <div className="deck-tabs" role="tablist" aria-label="Kategori Kartu Tantangan">
-          {challengeDecks.map((deck, idx) => {
-            const isActive = activeDeckTab === idx;
-            return (
-              <motion.button
-                key={deck.category}
-                type="button"
-                role="tab"
-                aria-selected={isActive}
-                className={`deck-tab tab-${deck.category.toLowerCase()} ${isActive ? 'active' : ''}`}
-                onClick={() => onSelectTab(idx)}
-                whileHover={{ y: -2 }}
-                whileTap={{ scale: 0.96 }}
-                transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-              >
-                {isActive && (
-                  <motion.div
-                    layoutId="activeDeckTabGlow"
-                    className={`deck-tab-active-bg tab-bg-${deck.category.toLowerCase()}`}
-                    transition={{ type: 'spring', stiffness: 380, damping: 28 }}
-                  />
-                )}
-                <span className="deck-tab-text">{deck.title}</span>
-              </motion.button>
-            );
-          })}
+        <div className="deck-tabs-wrapper">
+          <div 
+            className="deck-tabs" 
+            role="tablist" 
+            aria-label="Kategori Kartu Tantangan"
+            ref={tabsContainerRef}
+            onMouseDown={handleTabsMouseDown}
+            onMouseMove={handleTabsMouseMove}
+            onMouseUp={handleTabsMouseUp}
+            onMouseLeave={handleTabsMouseUp}
+          >
+            {challengeDecks.map((deck, idx) => {
+              const isActive = activeDeckTab === idx;
+              return (
+                <motion.button
+                  key={deck.category}
+                  ref={(el) => { tabRefs.current[idx] = el; }}
+                  type="button"
+                  role="tab"
+                  aria-selected={isActive}
+                  className={`deck-tab tab-${deck.category.toLowerCase()} ${isActive ? 'active' : ''}`}
+                  onClick={() => onSelectTab(idx)}
+                  whileHover={{ y: -2 }}
+                  whileTap={{ scale: 0.96 }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+                >
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeDeckTabGlow"
+                      className={`deck-tab-active-bg tab-bg-${deck.category.toLowerCase()}`}
+                      transition={{ type: 'spring', stiffness: 380, damping: 28 }}
+                    />
+                  )}
+                  <span className="deck-tab-text">{deck.title}</span>
+                </motion.button>
+              );
+            })}
+          </div>
         </div>
 
         <div className="card-showcase-wrapper">
@@ -304,7 +394,11 @@ export default function CardDeckSection({
             }}
           />
 
-          <div className="card-deck-stack-stage">
+          <div 
+            className="card-deck-stack-stage"
+            onTouchStart={handleStageTouchStart}
+            onTouchEnd={handleStageTouchEnd}
+          >
             {challengeDecks.map((deck, idx) => {
               const isActive = idx === activeDeckTab;
               const slot = getSlot(idx, activeDeckTab);
@@ -316,7 +410,21 @@ export default function CardDeckSection({
               return (
                 <motion.div
                   key={deck.category}
-                  className={`stacked-card-item card-${deck.category.toLowerCase()} ${isActive ? 'active' : 'inactive'}`}
+                  className={`stacked-card-item card-${deck.category.toLowerCase()} ${isActive ? 'active' : 'inactive'} ${isDragging && isActive ? 'is-dragging' : ''}`}
+                  drag={isActive ? "x" : false}
+                  dragConstraints={{ left: 0, right: 0 }}
+                  dragElastic={0.35}
+                  onDragStart={() => setIsDragging(true)}
+                  onDragEnd={(_e, info) => {
+                    setIsDragging(false);
+                    const swipeThreshold = 35;
+                    const velocityThreshold = 200;
+                    if (info.offset.x < -swipeThreshold || info.velocity.x < -velocityThreshold) {
+                      handleNextTab();
+                    } else if (info.offset.x > swipeThreshold || info.velocity.x > velocityThreshold) {
+                      handlePrevTab();
+                    }
+                  }}
                   animate={{
                     x: transform.x,
                     y: transform.y,

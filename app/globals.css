@@ -1458,23 +1458,45 @@ img {
   font-variant-numeric: tabular-nums;
 }
 
+.deck-tabs-wrapper {
+  width: 100%;
+  max-width: 760px;
+  margin: 28px auto 0;
+  position: relative;
+  padding: 0 4px;
+}
+
 .deck-tabs {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 8px;
-  margin-top: 32px;
   padding: 6px;
   background: rgba(20, 12, 17, 0.75);
   border: 1px solid rgba(230, 185, 128, 0.2);
   border-radius: var(--radius-full);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  max-width: 760px;
-  margin-left: auto;
-  margin-right: auto;
+  max-width: 100%;
+  margin: 0 auto;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  user-select: none;
+  touch-action: pan-x;
+  cursor: grab;
+}
+
+.deck-tabs:active {
+  cursor: grabbing;
+}
+
+.deck-tabs::-webkit-scrollbar {
+  display: none;
 }
 
 .deck-tab {
@@ -1494,6 +1516,8 @@ img {
   min-height: 44px;
   outline: none;
   z-index: 1;
+  flex-shrink: 0;
+  scroll-snap-align: center;
   transition: color 0.2s ease;
 }
 
@@ -1633,9 +1657,11 @@ img {
   justify-content: center;
   align-items: center;
   perspective: 1400px;
-  margin-bottom: 28px;
-  touch-action: manipulation;
+  margin-bottom: 24px;
+  touch-action: pan-y;
+  user-select: none;
 }
+
 
 .stacked-card-item {
   position: absolute;
@@ -1649,6 +1675,7 @@ img {
   transform-style: preserve-3d;
   will-change: transform, opacity;
   user-select: none;
+  touch-action: pan-y;
   transition: box-shadow 0.35s ease;
 }
 
@@ -1683,8 +1710,9 @@ img {
     0 0 45px rgba(249, 115, 22, 0.32);
 }
 
-.stacked-card-item.active:active {
-  cursor: grabbing;
+.stacked-card-item.active:active,
+.stacked-card-item.active.is-dragging {
+  cursor: grabbing !important;
 }
 
 .stacked-card-item.inactive {
@@ -3082,6 +3110,45 @@ img {
 
   .deck-section {
     padding: 60px 0 95px;
+  }
+
+  .deck-tabs {
+    justify-content: flex-start;
+    padding: 5px 12px;
+    gap: 6px;
+  }
+
+  .deck-tab {
+    padding: 8px 16px;
+    font-size: 0.84rem;
+    min-height: 38px;
+  }
+
+  .card-deck-stack-stage {
+    min-height: 420px;
+    margin-bottom: 16px;
+  }
+
+  .stacked-card-item {
+    max-width: 330px;
+  }
+
+  .deck-nav-arrow {
+    width: 38px;
+    height: 38px;
+  }
+
+  .deck-nav-arrow svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .deck-nav-prev {
+    left: 2px;
+  }
+
+  .deck-nav-next {
+    right: 2px;
   }
 
   .figma-wave-divider {
