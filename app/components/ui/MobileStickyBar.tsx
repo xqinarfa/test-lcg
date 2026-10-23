@@ -19,7 +19,7 @@ export default function MobileStickyBar({ onOpenModal }: MobileStickyBarProps) {
             fontSize: "0.72rem",
           }}
         >
-          Rp 250.000
+          Rp 88.000
         </span>
         <span className="val" style={{ color: "#ff4d6d", fontWeight: 800 }}>
           Rp 29.000 AJA!

@@ -63,7 +63,7 @@ export default function HeroSection({
 
           <div className="price-block">
             <div className="price-tag-group">
-              <span className="price-original">Rp 250.000</span>
+              <span className="price-original">Rp 88.000</span>
               <span className="price-current">Rp 29.000</span>
             </div>
             <span className="price-save-badge">HEMAT 65%</span>

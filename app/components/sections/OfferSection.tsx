@@ -29,7 +29,7 @@ export default function OfferSection({ onOpenModal }: OfferSectionProps) {
 
           <div className="offer-price-showcase">
             <div className="offer-price-box">
-              <span className="offer-price-struck">Rp 250.000</span>
+              <span className="offer-price-struck">Rp 88.000</span>
               <div className="offer-price-main">
                 <span className="offer-currency">Rp</span>
                 <span className="offer-amount">29.000</span>

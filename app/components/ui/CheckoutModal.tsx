@@ -91,12 +91,12 @@ export default function CheckoutModal({
                     color: "rgba(255,255,255,0.4)",
                   }}
                 >
-                  Rp 250.000
+                  Rp 88.000
                 </span>
               </div>
               <div className="summary-row discount">
                 <span>Diskon Khusus Pasutri</span>
-                <span>- Rp 162.000</span>
+                <span>- Rp 59.000</span>
               </div>
               <div className="summary-row total">
                 <span>Total Bayar Sekali Aja</span>
