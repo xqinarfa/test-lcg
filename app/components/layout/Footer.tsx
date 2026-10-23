@@ -22,7 +22,7 @@ export default function Footer() {
 
         <div className="social-links">
           <a 
-            href="https://instagram.com" 
+            href="https://www.instagram.com/lovecouplegames?vrfl=ZDNlZDc0MzIxNw==" 
             target="_blank" 
             rel="noopener noreferrer" 
             className="social-btn" 
@@ -36,7 +36,7 @@ export default function Footer() {
           </a>
 
           <a 
-            href="https://tiktok.com" 
+            href="https://www.tiktok.com/@lovecouplegames?is_from_webapp=1&sender_device=pc" 
             target="_blank" 
             rel="noopener noreferrer" 
             className="social-btn" 

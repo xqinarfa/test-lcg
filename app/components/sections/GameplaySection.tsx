@@ -1,10 +1,60 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { gameplaySteps } from '../../data/gameData';
 
+const femaleOutfits = [
+  {
+    id: 'queen-bee',
+    name: 'Queen Bee',
+    tag: 'Queen Bee (Include Hair)',
+    src: '/assets/images/girl-001.jpeg',
+    style: 'Gaya & Ekspresi',
+  },
+  {
+    id: 'mrs-elf',
+    name: 'Mrs Elf',
+    tag: 'Mrs Elf (Include Hair)',
+    src: '/assets/images/girl-002.jpeg',
+    style: 'Gaya & Ekspresi',
+  },
+];
+
+const maleOutfits = [
+  {
+    id: 'angel-may-cry',
+    name: 'Angel May Cry',
+    tag: 'Angel May Cry',
+    src: '/assets/images/man-001.jpeg',
+    style: 'Outfit & Tampilan',
+  },
+  {
+    id: 'city-boy',
+    name: 'City Boy',
+    tag: 'City Boy - Navy',
+    src: '/assets/images/man-002.jpeg',
+    style: 'Outfit & Tampilan',
+  },
+  {
+    id: 'two-reds',
+    name: '2 Reds',
+    tag: '2 Reds',
+    src: '/assets/images/man-003.jpeg',
+    style: 'Outfit & Tampilan',
+  },
+  {
+    id: 'fire-serpent',
+    name: 'Fire Serpent',
+    tag: 'Fire Serpent (Include Hair)',
+    src: '/assets/images/man-004.jpeg',
+    style: 'Outfit & Tampilan',
+  },
+];
+
 export default function GameplaySection() {
-  const [tilt, setTilt] = React.useState<{ x: number; y: number; activeIndex: number | null }>({ x: 0, y: 0, activeIndex: null });
+  const [tilt, setTilt] = useState<{ x: number; y: number; activeIndex: number | null }>({ x: 0, y: 0, activeIndex: null });
+  const [femaleIndex, setFemaleIndex] = useState<number>(0);
+  const [maleIndex, setMaleIndex] = useState<number>(0);
 
   const handlePhoneMouseMove = (e: React.MouseEvent<HTMLDivElement>, index: number) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -17,9 +67,29 @@ export default function GameplaySection() {
     setTilt({ x: 0, y: 0, activeIndex: null });
   };
 
+  const handleCycleFemale = () => {
+    setFemaleIndex((prev) => (prev + 1) % femaleOutfits.length);
+  };
+
+  const handleSelectFemale = (index: number) => {
+    setFemaleIndex(index);
+  };
+
+  const handleCycleMale = () => {
+    setMaleIndex((prev) => (prev + 1) % maleOutfits.length);
+  };
+
+  const handleSelectMale = (index: number) => {
+    setMaleIndex(index);
+  };
+
+  const currentFemale = femaleOutfits[femaleIndex];
+  const currentMale = maleOutfits[maleIndex];
+
   return (
     <section className="gameplay-section" id="cara-main">
       <div className="container gameplay-grid">
+        {/* Steps Guide */}
         <div>
           <span className="faq-kicker">Alur Permainan</span>
           <h2 className="section-title">
@@ -47,8 +117,10 @@ export default function GameplaySection() {
           </div>
         </div>
 
+        {/* Visual Character Customization Dual Phones with 3D Depth Tilt */}
         <div className="dual-phones-container">
           <div className="dual-phones">
+            {/* Phone 1: Karakter Istri */}
             <div 
               className="dual-phone-item"
               onMouseMove={(e) => handlePhoneMouseMove(e, 0)}
@@ -61,20 +133,50 @@ export default function GameplaySection() {
               }}
             >
               <div className="phone-notch" />
-              <div className="phone-screen">
+              <div 
+                className="phone-screen phone-screen-interactive"
+                onClick={handleCycleFemale}
+                title="Klik untuk ganti kostum istri"
+              >
                 <img 
-                  src="/assets/images/custom-female.jpg" 
-                  alt="Kustomisasi Karakter Istri" 
+                  key={currentFemale.id}
+                  src={currentFemale.src} 
+                  alt={`Kustomisasi Karakter Istri - ${currentFemale.name}`} 
                   width={260} 
-                  height={500} 
+                  height={500}
+                  className="phone-screen-img"
                 />
+                <div className="phone-screen-overlay-btn" aria-hidden="true">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+                  </svg>
+                  <span>Ganti Kostum ({femaleIndex + 1}/{femaleOutfits.length})</span>
+                </div>
               </div>
               <div className="dual-phone-caption">
                 <span className="phone-avatar-tag">Karakter Istri</span>
-                <span className="phone-avatar-sub">Gaya & Ekspresi</span>
+                <span className="phone-avatar-sub">{currentFemale.tag}</span>
+
+                <div className="phone-outfit-pills">
+                  {femaleOutfits.map((outfit, idx) => (
+                    <button
+                      key={outfit.id}
+                      type="button"
+                      className={`phone-outfit-pill ${idx === femaleIndex ? 'active' : ''}`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleSelectFemale(idx);
+                      }}
+                      aria-label={`Pilih kostum ${outfit.name}`}
+                    >
+                      {outfit.name}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
 
+            {/* Phone 2: Karakter Suami */}
             <div 
               className="dual-phone-item"
               onMouseMove={(e) => handlePhoneMouseMove(e, 1)}
@@ -87,17 +189,46 @@ export default function GameplaySection() {
               }}
             >
               <div className="phone-notch" />
-              <div className="phone-screen">
+              <div 
+                className="phone-screen phone-screen-interactive"
+                onClick={handleCycleMale}
+                title="Klik untuk ganti kostum suami"
+              >
                 <img 
-                  src="/assets/images/custom-male.jpg" 
-                  alt="Kustomisasi Karakter Suami" 
+                  key={currentMale.id}
+                  src={currentMale.src} 
+                  alt={`Kustomisasi Karakter Suami - ${currentMale.name}`} 
                   width={260} 
-                  height={500} 
+                  height={500}
+                  className="phone-screen-img"
                 />
+                <div className="phone-screen-overlay-btn" aria-hidden="true">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+                  </svg>
+                  <span>Ganti Kostum ({maleIndex + 1}/{maleOutfits.length})</span>
+                </div>
               </div>
               <div className="dual-phone-caption">
                 <span className="phone-avatar-tag">Karakter Suami</span>
-                <span className="phone-avatar-sub">Outfit & Tampilan</span>
+                <span className="phone-avatar-sub">{currentMale.tag}</span>
+
+                <div className="phone-outfit-pills">
+                  {maleOutfits.map((outfit, idx) => (
+                    <button
+                      key={outfit.id}
+                      type="button"
+                      className={`phone-outfit-pill ${idx === maleIndex ? 'active' : ''}`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleSelectMale(idx);
+                      }}
+                      aria-label={`Pilih kostum ${outfit.name}`}
+                    >
+                      {outfit.name}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
           </div>

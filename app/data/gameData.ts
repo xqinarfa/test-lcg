@@ -128,7 +128,7 @@ export const faqItems: FaqItem[] = [
   },
   {
     question: 'Apakah ada biaya langganan bulanan setelah membeli?',
-    answer: 'Tidak ada. Pembayaran Rp 88.000 adalah harga sekali bayar untuk akses selamanya. Tidak ada tagihan bulanan berulang, tidak ada fitur berbayar yang terkunci di dalam game, dan mencakup semua pembaruan kartu di masa mendatang.',
+    answer: 'Tidak ada. Pembayaran Rp 29.000 adalah harga sekali bayar untuk akses selamanya. Tidak ada tagihan bulanan berulang, tidak ada fitur berbayar yang terkunci di dalam game, dan mencakup semua pembaruan kartu di masa mendatang.',
   },
   {
     question: 'Bagaimana kalau nanti ganti HP atau aplikasinya terhapus?',

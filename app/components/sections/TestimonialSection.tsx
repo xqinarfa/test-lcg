@@ -113,14 +113,14 @@ export default function TestimonialSection({ onOpenModal: _onOpenModal }: Testim
         >
           <motion.h2 
             id="testimonial-heading" 
-            className="section-title"
+            className="section-title text-center"
             variants={headerItemVariants}
           >
             Apa Kata Pasutri yang <span className="title-accent-gold">Sudah Mencoba?</span>
           </motion.h2>
 
           <motion.p 
-            className="section-subtitle mx-auto"
+            className="section-subtitle mx-auto text-center"
             variants={headerItemVariants}
           >
             Cerita jujur dari pasangan suami istri yang hubungannya kembali mesra, hangat, dan seru berkat Love Couple Games.

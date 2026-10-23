@@ -36,7 +36,7 @@ lcg/
 │   │   │   └── OfferSection.tsx  # Final pricing CTA & checkout flow steps
 │   │   └── ui/                   # Reusable atomic UI & modal dialogs
 │   │       ├── Button.tsx        # Retro 3D tactile button primitive
-│   │       ├── CheckoutModal.tsx # Multi-step Xendit QRIS / APK checkout modal
+│   │       ├── CheckoutModal.tsx # Multi-step Doku QRIS / APK checkout modal
 │   │       ├── FigmaWaveDivider.tsx# Seamless dual-layer SVG wave divider
 │   │       └── MobileStickyBar.tsx# Mobile bottom sticky purchase CTA
 │   ├── data/

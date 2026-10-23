@@ -3,6 +3,44 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { painPoints } from '../../data/gameData';
 
+interface CardMeta {
+  theme: string;
+  tag: string;
+  icon: React.ReactNode;
+}
+
+const cardMetas: CardMeta[] = [
+  {
+    theme: 'card-theme-rose',
+    tag: 'Masalah #01 • Belum Siap',
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="10" />
+        <polyline points="12 6 12 12 16 14" />
+      </svg>
+    ),
+  },
+  {
+    theme: 'card-theme-gold',
+    tag: 'Masalah #02 • Kurang Respon',
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+        <line x1="9" y1="10" x2="15" y2="10" />
+      </svg>
+    ),
+  },
+  {
+    theme: 'card-theme-purple',
+    tag: 'Masalah #03 • Rutinitas Monoton',
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z" />
+      </svg>
+    ),
+  },
+];
+
 export default function InsightSection() {
   const containerRef = useRef<HTMLElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -64,6 +102,7 @@ export default function InsightSection() {
     '♥ Masalah #02 • Canggung',
     '★ Masalah #03 • Rutinitas Monoton'
   ];
+
 
   const getCardStyle = (index: number): React.CSSProperties => {
     if (index === 0) {
@@ -216,58 +255,44 @@ export default function InsightSection() {
           </div>
 
           <div className="stacked-deck-container" aria-live="polite">
-            {painPoints.map((point, index) => (
-              <div
-                className={`stacked-card ${cardThemes[index]} ${activeCardIndex === index ? 'is-active' : ''}`}
-                key={index}
-                style={getCardStyle(index)}
-                role="article"
-                aria-label={`Kartu realita ke-${index + 1}: ${point.title}`}
-              >
-                <div className="stacked-card-inner">
-                  <div className="stacked-card-header">
-                    <div className="stacked-card-badge">
-                      <span className="badge-dot" />
-                      <span>{cardTags[index]}</span>
+            {painPoints.map((point, index) => {
+              const meta = cardMetas[index] || cardMetas[0];
+              return (
+                <div
+                  className={`stacked-card ${meta.theme} ${activeCardIndex === index ? 'is-active' : ''}`}
+                  key={index}
+                  style={getCardStyle(index)}
+                  role="article"
+                  aria-label={`Kartu realita ke-${index + 1}: ${point.title}`}
+                >
+                  <div className="stacked-card-inner">
+                    <div className="stacked-card-header">
+                      <div className="stacked-card-badge">
+                        <span className="badge-dot" />
+                        <span>{meta.tag}</span>
+                      </div>
+
+                      <div className="stacked-card-icon" aria-hidden="true">
+                        {meta.icon}
+                      </div>
                     </div>
 
-                    <div className="stacked-card-icon">
-                      {index === 0 && (
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                          <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                          <line x1="8" y1="21" x2="16" y2="21"></line>
-                          <line x1="12" y1="17" x2="12" y2="21"></line>
-                        </svg>
-                      )}
-                      {index === 1 && (
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                        </svg>
-                      )}
-                      {index === 2 && (
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                          <circle cx="12" cy="12" r="10"></circle>
-                          <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
-                        </svg>
-                      )}
+                    <div className="stacked-card-body">
+                      <span className="stacked-card-number">0{index + 1}</span>
+                      <h3>{point.title}</h3>
+                      <p>{point.description}</p>
                     </div>
-                  </div>
 
-                  <div className="stacked-card-body">
-                    <span className="stacked-card-number">0{index + 1}</span>
-                    <h3>{point.title}</h3>
-                    <p>{point.description}</p>
-                  </div>
-
-                  <div className="stacked-card-footer">
-                    <span className="footer-index">0{index + 1} / 03</span>
-                    <span className="footer-hint">
-                      {index < 2 ? 'Scroll ke bawah untuk mengungkap kartu berikutnya ↓' : 'Semua realita pasutri telah terbuka ✓'}
-                    </span>
+                    <div className="stacked-card-footer">
+                      <span className="footer-index">0{index + 1} / 03</span>
+                      <span className="footer-hint">
+                        {index < 2 ? 'Scroll ke bawah untuk mengungkap kartu berikutnya ↓' : 'Semua realita pasutri telah terbuka ✓'}
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           <div className="stacked-nav">
